@@ -7,5 +7,7 @@ public class Hand
     {
         cards.Add(card);
     }
+
+    // Waiting for Card to expose Rank and Suit before adding hand value logic.
 }
 
