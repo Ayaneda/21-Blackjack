@@ -2,7 +2,10 @@ namespace Tjugoett.Cards;
 
 public class Hand
 {
+    private List<Card> cards = new List<Card>();
+    public void AddCard(Card card)
+    {
+        cards.Add(card);
+    }
 }
 
-
-//A method named AddCard(Card card) needs to be built here. It´s needed in Participant to add a card to the hand. 
