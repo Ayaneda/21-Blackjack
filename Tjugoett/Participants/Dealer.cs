@@ -6,4 +6,5 @@ public class Dealer : Participant
     {
 
     }
+    // Waiting for Hand to provide the hand value before adding the dealer's Hit/Stand rule.
 }
