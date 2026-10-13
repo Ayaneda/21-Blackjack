@@ -14,6 +14,6 @@ public enum Rank
     Jack = 10, 
     Queen = 10, 
     King = 10, 
-    Ace = 11        //It needs a logic to turn it to value 1 when its needed
+    Ace = 11        //It needs a logic to turn Ace's value 1 when its needed
 
 }
