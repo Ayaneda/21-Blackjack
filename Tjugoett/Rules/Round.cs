@@ -33,9 +33,20 @@ public class Round
                 }
             }
         }
-         while (dealer.Hand.Value <= 16)
+        while (true)
         {
-            deck.DealCards(dealer);
+            if (dealer.Hand.Value <= 16)
+            {
+                deck.DealCards(dealer);
+            }
+            else if (dealer.Hand.Value >= 17)
+            {
+                break;
+            }
+            else
+            {
+                break;
+            }
         }
     
         if (p1.Hand.Value > 21)
@@ -56,7 +67,7 @@ public class Round
         }
         else
         {
-            return Outcome.Lose
+            return Outcome.Lose;
         }
     }
 
