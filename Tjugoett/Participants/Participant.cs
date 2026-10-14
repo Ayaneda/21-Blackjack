@@ -20,4 +20,10 @@ public class Participant
         Hand.AddCard(card);
     }
 
+    // Empties the hand before a new round
+    public void ResetHand()
+    {
+        Hand.Clear();
+    }
+
 }
