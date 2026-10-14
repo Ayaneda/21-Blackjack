@@ -41,5 +41,20 @@ public class Hand
     {
         return GetValue() == 21;
     }
+
+    public bool IsSoft() // Returns true if an Ace is still counted as 11.
+    {
+        int total = 0;
+        int aceCount = 0;
+        foreach (Card card in cards)
+        {
+            total += card.Value;
+            if (card.CardRank == Rank.Ace)
+            {
+                aceCount++;
+            }
+        }
+        return aceCount > 0 && total <= 21;
+    }
 }
 
