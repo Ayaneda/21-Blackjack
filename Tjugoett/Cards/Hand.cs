@@ -36,5 +36,10 @@ public class Hand
     {
         return GetValue() > 21;
     }
+
+    public bool IsTwentyOne() // Returns true if the hand value is exactly 21.
+    {
+        return GetValue() == 21;
+    }
 }
 
