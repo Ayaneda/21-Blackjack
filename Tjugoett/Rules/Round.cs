@@ -8,8 +8,6 @@ public class Round
     public Outcome PlayRound(Deck deck, Player p1, Dealer dealer)
     {
         deck.DealCards(p1);
-        deck.DealCards(p1);
-        deck.DealCards(dealer);
         deck.DealCards(dealer);
     
 
@@ -21,7 +19,7 @@ public class Round
 
                 if (choice == Move.Hit)
                 {
-                    deck.DealCards(p1);
+                    deck.DealCard(p1);
                 }
                 else if (p1.Hand.Value > 21)
                 {
@@ -37,7 +35,7 @@ public class Round
         {
             if (dealer.Hand.Value <= 16)
             {
-                deck.DealCards(dealer);
+                deck.DealCard(dealer);
             }
             else if (dealer.Hand.Value >= 17)
             {
