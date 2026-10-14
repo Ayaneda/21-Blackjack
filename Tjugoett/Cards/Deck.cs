@@ -9,6 +9,11 @@ public class Deck
 {
     
     private List <Card> _deck = new List<Card>();
+
+    public Deck()  //Contructor to make a new deck when you create a object deck and mixing already.
+    {
+        _shuffle();
+    }
     
     private void _buildDeck()  //method to build a deck. Private because anyone should doing outside this method
     {
