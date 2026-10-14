@@ -7,6 +7,10 @@ public class Hand
     {
         cards.Add(card);
     }
+    public void Clear()  // Remove all cards from the hand before a new round.
+    {
+        cards.Clear();
+    }
     public int GetValue()
     {
         int total = 0;
