@@ -7,7 +7,7 @@ namespace Tjugoett.Cards;
 
 public class Deck
 {
-    //Bygger leken, blandar, delar ut, vet hur många kort som är kvar
+    
     private List <Card> _deck = new List<Card>();
     
     private void _buildDeck()  //method to build a deck. Private because anyone should doing outside this method
@@ -46,16 +46,10 @@ public class Deck
         DealCard(participant);
         DealCard(participant);
     }
-    /*public void AddCard(Card card) from hand class 
+    public override string ToString()     //This tells how many card are left in deck.
     {
-        cards.Add(card);
+        return $"Kortleken har {_deck.Count - 1}/52 kort.";
     }
-    */
-    /*public void ReceiveCard(Card card) from participant
-    {
-        Hand.AddCard(card);
-    }
-    */
     
 
 }
