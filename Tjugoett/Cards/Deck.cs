@@ -1,5 +1,7 @@
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Tjugoett.Participants;
 
 namespace Tjugoett.Cards;
 
@@ -28,6 +30,21 @@ public class Deck
         Random.Shared.Shuffle(CollectionsMarshal.AsSpan(_deck));   //this shuffle the new deck randomly 
         //I want to add that the code above uses Fisher-Yates algorithm according to my information source(Gemini)
     }
+    public void RemoveCard(out Card removedCard)    //This method take the card that is in top(last index)
+    {
+        removedCard = _deck[^1];   //^1(the first from the last index) so it set the item in the variable
+        _deck.RemoveAt(_deck.Count - 1);     //Last, it remove the item from the list
+    }
+
+    public void DealCards()
+    {
+        
+    }
+    /*public void AddCard(Card card) from hand class 
+    {
+        cards.Add(card);
+    }
+    */
 
 
 
