@@ -32,5 +32,9 @@ public class Hand
         }
         return total;
     }
+    public bool IsBust() // Returns true if the hand value is over 21.
+    {
+        return GetValue() > 21;
+    }
 }
 
