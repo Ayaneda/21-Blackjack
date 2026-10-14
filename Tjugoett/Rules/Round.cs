@@ -5,10 +5,11 @@ namespace Tjugoett.Rules;
 
 public class Round
 {
-    public void PlayRound(Deck deck, Player p1, Dealer dealer)
+    public Outcome PlayRound(Deck deck, Player p1, Dealer dealer)
     {
         deck.DealCards(p1);
-        deck.DealCards(p2);
+        deck.DealCards(p1);
+        deck.DealCards(dealer);
         deck.DealCards(dealer);
     
 
@@ -22,22 +23,40 @@ public class Round
                 {
                     deck.DealCards(p1);
                 }
-                if (p1.Hand.Value > 21)
+                else if (p1.Hand.Value > 21)
                 {
                     break;
                 }
-                if (choice == Move.Stand)
+                else if (choice == Move.Stand)
                 {
                     break;
                 }
             }
         }
-        if (dealer.Hand.Value < 17)
+         while (dealer.Hand.Value <= 16)
         {
-            while (true)
-            {
-                deck.DealCards(dealer);
-            }
+            deck.DealCards(dealer);
+        }
+    
+        if (p1.Hand.Value > 21)
+        {
+            return Outcome.Lose;
+        }
+        else if (dealer.Hand.Value > 21)
+        {
+            return Outcome.Win;
+        }
+        else if (p1.Hand.Value > dealer.Hand.Value)
+        {
+            return Outcome.Win;
+        }
+        else if (p1.Hand.Value == dealer.Hand.Value)
+        {
+            return Outcome.Push;
+        }
+        else
+        {
+            return Outcome.Lose
         }
     }
 
