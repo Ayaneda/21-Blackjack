@@ -36,18 +36,27 @@ public class Deck
         _deck.RemoveAt(_deck.Count - 1);     //Last, it remove the item from the list
     }
 
-    public void DealCards()
+    public void DealCard(Participant participant)  //This method draw a card from deck and added to the participant(player/dealer)
     {
-        
+        RemoveCard(out Card card);          //Remove a card from _deck
+        participant.ReceiveCard(card);      //Add card removed to participant(player/dealer)
+    }
+    public void DealCards(Participant participant)   //This method call DealCard twice when the round start and all player need 2 cards.
+    {
+        DealCard(participant);
+        DealCard(participant);
     }
     /*public void AddCard(Card card) from hand class 
     {
         cards.Add(card);
     }
     */
-
-
-
+    /*public void ReceiveCard(Card card) from participant
+    {
+        Hand.AddCard(card);
+    }
+    */
+    
 
 }
 
