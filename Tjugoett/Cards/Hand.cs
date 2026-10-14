@@ -2,20 +2,20 @@ namespace Tjugoett.Cards;
 
 public class Hand
 {
-    private List<Card> cards = new List<Card>(); // Keep the card list private so Hand controls how cards are added.
+    private readonly List<Card> handCards = new List<Card>(); // Keep the card list private so Hand controls how cards are added.
     public void AddCard(Card card)
     {
-        cards.Add(card);
+        handCards.Add(card);
     }
     public void Clear()  // Remove all cards from the hand before a new round.
     {
-        cards.Clear();
+        handCards.Clear();
     }
     public int GetValue()
     {
         int total = 0;
         int aceCount = 0;
-        foreach (Card card in cards) // Add the value of each card in the hand.
+        foreach (Card card in handCards) // Add the value of each card in the hand.
         {
             total += card.Value;
 
@@ -46,7 +46,7 @@ public class Hand
     {
         int total = 0;
         int aceCount = 0;
-        foreach (Card card in cards)
+        foreach (Card card in handCards)
         {
             total += card.Value;
             if (card.CardRank == Rank.Ace)
