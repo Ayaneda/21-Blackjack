@@ -1,3 +1,6 @@
+using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
+
 namespace Tjugoett.Cards;
 
 public class Deck
@@ -18,5 +21,16 @@ public class Deck
             }
         }
     }
+    private void _shuffle()
+    {
+        _deck.Clear();          //this clear the list
+        _buildDeck();           //this create a new deck (52 cards)
+        Random.Shared.Shuffle(CollectionsMarshal.AsSpan(_deck));   //this shuffle the new deck randomly 
+        //I want to add that the code above uses Fisher-Yates algorithm according to my information source(Gemini)
+    }
+
+
+
+
 }
 
