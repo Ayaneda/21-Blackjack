@@ -48,7 +48,7 @@ public class Deck
     }
     public override string ToString()     //This tells how many card are left in deck.
     {
-        return $"Kortleken har {_deck.Count - 1}/52 kort.";
+        return $"Kortleken har {_deck.Count}/52 kort.";
     }
     
 
