@@ -54,7 +54,11 @@ public class Hand
                 aceCount++;
             }
         }
-        return aceCount > 0 && total <= 21;
+        while (total > 21 && aceCount > 0) // Change Ace from 11 to 1 if the total is over 21.
+        {
+            total -= 10;
+            aceCount--;
+        }
+        return aceCount > 0;
     }
 }
-
