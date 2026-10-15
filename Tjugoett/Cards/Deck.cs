@@ -12,10 +12,10 @@ public class Deck
 
     public Deck()  //Contructor to make a new deck when you create a object deck and mixing already.
     {
-        _shuffle();
+        Shuffle();
     }
     
-    private void _buildDeck()  //method to build a deck. Private because anyone should doing outside this method
+    private void BuildDeck()  //method to build a deck. Private because anyone should doing outside this method
     {
         foreach(Suit cardSuit in Enum.GetValues(typeof(Suit)))   //Getting values from enum Suit
         {
@@ -28,10 +28,10 @@ public class Deck
             }
         }
     }
-    private void _shuffle()
+    private void Shuffle()
     {
         _deck.Clear();          //this clear the list
-        _buildDeck();           //this create a new deck (52 cards)
+        BuildDeck();           //this create a new deck (52 cards)
         Random.Shared.Shuffle(CollectionsMarshal.AsSpan(_deck));   //this shuffle the new deck randomly 
         //I want to add that the code above uses Fisher-Yates algorithm according to my information source(Gemini)
     }
