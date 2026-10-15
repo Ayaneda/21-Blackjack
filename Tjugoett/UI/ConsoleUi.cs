@@ -44,7 +44,24 @@ public class ConsoleUi
 
 
     public void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
-    {                                                                   //DANIAL, fortsätt!
+    {
+        Console.WriteLine($"{participant.Name}:");
+
+        for (int i = 0; i < participant.Hand.Cards.Count; i++) // Go through all cards in the hand.
+        {
+            if (hideHoleCard && i == 1) // Hide the dealer's second card.
+            {
+                Console.WriteLine("Dolt kort");
+            }
+            else
+            {
+                Console.WriteLine(participant.Hand.Cards[i]); // Show the card.
+            }
+        }
+        if (!hideHoleCard) // Show the total only when all cards are visible.
+        {
+            Console.WriteLine($"Värde: {participant.Hand.Value}");
+        }
 
     }
 
