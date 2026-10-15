@@ -2,9 +2,14 @@ namespace Tjugoett.Participants;
 
 public class Dealer : Participant
 {
+    public bool HoleCardHidden { get; private set; } = true;
     public Dealer(string name) : base(name)
     {
 
     }
-    // Waiting for Hand to provide the hand value before adding the dealer's Hit/Stand rule.
+
+    public void RevealHoleCard() // Reveal the dealer's hidden card.
+    {
+        HoleCardHidden = false;
+    }
 }
