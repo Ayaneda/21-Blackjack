@@ -12,4 +12,9 @@ public class Dealer : Participant
     {
         HoleCardHidden = false;
     }
+
+    public bool ShouldHit() // Returns true if the dealer should take another card.
+    {
+        return Hand.Value < 17;
+    }
 }
