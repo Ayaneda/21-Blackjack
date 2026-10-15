@@ -16,6 +16,14 @@ Endast GameStorage är av namespace Tjugoett.Storage. Den kommunicerar med filen
 Namespace Tjugoett.UI håller ConsoleUi och Game. ConsoleUi står för kommunikationen via Console och visar meny för användaren. Game står för att hålla igång spelet och ser till att rätt sak händer i rätt ordning. 
 
 ## Vem som gjort vad — vilket tillval var och en har byggt
+### Aldo
+
+### Aythami
+
+### Emelianna
+
+### Danial
+
 
 ## Vilka regler som gäller, om ni avvikit från specifikationen på någon punkt
 
