@@ -70,8 +70,28 @@ public class ConsoleUi
         Console.WriteLine(message);
     }
 
-    public void ShowOutcome(Outcome outcome)// Prints how the round ended. DANIAL, fortsätt!
+    public void ShowOutcome(Outcome outcome)// Prints how the round ended. 
     {
+        if (outcome == Outcome.Win)
+        {
+            Console.WriteLine(@"\(^_^)/");
+            Console.WriteLine("Du vann!");
+        }
+        else if (outcome == Outcome.Lose)
+        {
+            Console.WriteLine("(╥﹏╥)");
+            Console.WriteLine("Du förlorade.");
+        }
+        else if (outcome == Outcome.Push)
+        {
+            Console.WriteLine("¯\\_(ツ)_/¯");
+            Console.WriteLine("Det blev lika.");
+        }
+        else if (outcome == Outcome.Blackjack)
+        {
+            Console.WriteLine("★ ★ ★");
+            Console.WriteLine("Naturlig tjugoett!");
+        }
 
     }
 
