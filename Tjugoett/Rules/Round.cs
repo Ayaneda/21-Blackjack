@@ -5,50 +5,50 @@ namespace Tjugoett.Rules;
 
 public class Round
 {
-    // Here we recive three objects from the game Loop, deck , p1 and dealer
+    // Here we receive a list of players, the deck and the dealer.
     public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
     {
+        // Create an empty list to store the outcome for each player.
         List<Outcome> roundResults = new List<Outcome>();
-        // We give two cards to the player and to the dealer
-        //deck.DealCards(p1);
-        //deck.DealCards(dealer);
-
+        
+        // Give two cards to ALL players in the list, and to the dealer
         for (int i =0; i < players.Count; i++)
         {
-            deck.DealCards(players[i]);
+            deck.DealCards(players[i]); // Players get two cards 
         }
-        deck.DealCards(dealer);
+        deck.DealCards(dealer); // Dealer gets two cards
 
+        // Player turns - Loop through each player one by one
         for (int i = 0; i < players.Count; i++)
         {
             
-            // Here we control if player has a Blacjack
+            // If a player gets 21 directly, they get Blackjack and skip their turn
             if (players[i].Hand.Value == 21)
             {
-                continue;
+                continue;  // We handle the result later in the outcome loop,
+                           // so we just jump to the next player here
             }
         
             // if the cards are less than 21 you can get another card
-            if (p1.Hand.Value < 21)
+            if (players[i].Hand.Value < 21)
             {   
-                // Here, the player is kept in a loop until that the player gets the right value
-                // that the player gets the right value
+                // he current player is kept in this loop until they stand or bust
                 while (true)
                 {
-                    Move choice = p1.GetMove(); // Ask the playern if the palern wants to Hit or Stand.
+                    Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
 
-                    if (choice == Move.Hit) // The playern get another card
+                    if (choice == Move.Hit) // The player gets another card
                     {
-                        deck.DealCard(p1);
+                        deck.DealCard(players[i]); // 
                     } 
-                    else if (choice == Move.Stand) // The player choose Stand and the loop breaks
+                    else if (choice == Move.Stand) // The player choose Stand and their loop breaks
                     {
                         break;
                     }
             
-                    if (players[i].Hand.Value > 21) // Here we control the playerns choise
-                    {                               // if the playern took a card and the value is greater then 21
-                        break;                      // then the player is bust
+                    if (players[i].Hand.Value > 21) // Control the player's value after each card
+                    {                               
+                        break; // The playern is bust                     
                     }
         
                 }
@@ -58,7 +58,7 @@ public class Round
         }
             while (true)
             {   
-                // The dealer has no options, as they must strictly follow the set rules of the game
+                // Dealer's turn - after the players are done.
                 if (dealer.Hand.Value <= 16)
                 {
                     deck.DealCard(dealer);
@@ -73,32 +73,38 @@ public class Round
                 }
             }
             
-
+        // Decide the outcome for each player and add it to the results list
         for (int i = 0; i < players.Count; i++) 
         {
             // When both loops are complete, the computer compares 
             // the hands from top to bottom to decide the outcome
             if (players[i].Hand.Value == 21 && dealer.Hand.Value !=21)
             {
-                roundResults.Add(Outcome.Blacjack);
+                roundResults.Add(Outcome.Blackjack);
             }
-            else if (.Hand.Value > 21)
+            else if (players[i].Hand.Value > 21)
             {
-                return Outcome.Win;
+                roundResults.Add(Outcome.Lose);
             }
-            else if (p1.Hand.Value > dealer.Hand.Value)
+            else if (dealer.Hand.Value > 21)
             {
-                return Outcome.Win;
+                roundResults.Add(Outcome.Win);
             }
-            else if (p1.Hand.Value == dealer.Hand.Value)
+            else if (players[i].Hand.Value > dealer.Hand.Value)
             {
-                return Outcome.Push;
+                roundResults.Add(Outcome.Win);
+            }
+            else if (players[i].Hand.Value == dealer.Hand.Value)
+            {
+                roundResults.Add(Outcome.Push);
             }
             else
             {
-                return Outcome.Lose;
+                roundResults.Add(Outcome.Lose);
             }
         }
+        // Send the final results back to the game loop
+        return roundResults;
     
     }
 
