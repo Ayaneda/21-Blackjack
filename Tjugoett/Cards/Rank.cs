@@ -11,9 +11,9 @@ public enum Rank
     D8 = 8,
     D9 = 9,
     D10 = 10,
-    Jack = 10, 
-    Queen = 10, 
-    King = 10, 
-    Ace = 11        //It needs a logic to turn Ace's value 1 when its needed
+    Knekt = 10, 
+    Dam = 10, 
+    Kung = 10, 
+    Ess = 11        //It needs a logic to turn Ace's value 1 when its needed
 
 }
