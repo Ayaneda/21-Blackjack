@@ -2,15 +2,15 @@
  
 ## Vad programmet gör och hur man startar det
 
-1. **Program** skapar ett **Game** och kör `Run()`.
-2. **Game** visar menyn via **ConsoleUi** (`ShowMenu()`). Vid "Spela" frågar Game antal spelare och namn (`AskPlayerCount()`, `AskName()`) och skapar en **Player** för varje, med `ui.AskMove` inskickad.
+1. **Program** skapar ett **Game** och kör Run().
+2. **Game** visar menyn via **ConsoleUi** (ShowMenu()). Vid "Spela" frågar Game antal spelare och namn (AskPlayerCount(), AskName()) och skapar en **Player** för varje, med ui.AskMove inskickad.
 3. Game skapar en **Deck** och en **Dealer** och startar en **Round**.
 4. **Round** blandar kortleken och delar ut två **Card** till varje spelare och givaren. Korten hamnar i varje deltagares **Hand**.
-5. **Spelarnas tur:** Round anropar `player.GetMove()` för en spelare i taget. Player kör `AskMove(this)`, så **ConsoleUi** visar handen och frågar Hit eller Stand. Vid Hit ger Round ett nytt kort, tills spelaren stannar eller går över 21.
-6. **Givarens tur:** **Dealer** tar kort enligt regeln (`ShouldHit()`, under 17) utan att fråga någon.
+5. **Spelarnas tur:** Round anropar player.GetMove() för en spelare i taget. Player kör AskMove(this), så **ConsoleUi** visar handen och frågar Hit eller Stand. Vid Hit ger Round ett nytt kort, tills spelaren stannar eller går över 21.
+6. **Givarens tur:** **Dealer** tar kort enligt regeln (ShouldHit(), under 17) utan att fråga någon.
 7. **Resultat:** Round jämför varje spelares summa från **Hand** med givarens och ger ett **Outcome** (Win, Lose, Push, Blackjack).
-8. **Tillbaka i Game:** resultatet visas med `ShowOutcome()` och sparas med **GameStorage** (`SaveResult()`). Sedan visas menyn igen.
-9. **"Visa tidigare resultat"** läser in dem med `LoadResults()` och visar dem via ConsoleUi. **"Avsluta"** avslutar loopen i `Run()`.
+8. **Tillbaka i Game:** resultatet visas med ShowOutcome() och sparas med **GameStorage** (SaveResult()). Sedan visas menyn igen.
+9. **"Visa tidigare resultat"** läser in dem med LoadResults() och visar dem via ConsoleUi. **"Avsluta"** avslutar loopen i Run().
 
 ## En kort översikt över klasserna och hur de hänger ihop
 Vi har utgått ifrån förslaget på klasser som fanns i uppgiftsbeskrivningen. Namespace har använts för att göra strukturen tydligare. 
