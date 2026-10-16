@@ -55,20 +55,18 @@ public class Round
         }
 
         // Dealer's turn - after the players are done.
+        dealer.RevealHoleCard(); // Turning the hole card first
+
         while (true)
         {   
-            // The dealer has no options, as they must strictly follow the set rules of the game
-            if (dealer.Hand.Value <= 16)
+            // 
+            if (dealer.ShouldHit())
             {
-                deck.DealCard(dealer);
-            }
-            else if (dealer.Hand.Value >= 17)
-            {
-                break;
+                deck.DealCard(Dealer);
             }
             else
             {
-                break;
+                break; // The dealer Stand or is bust.
             }
         }
 
@@ -77,7 +75,7 @@ public class Round
         {
             // When both loops are complete, the computer compares 
             // the hands from top to bottom to decide the outcome
-            if (players[i].Hand.Value == 21 && dealer.Hand.Value != 21)
+            if (players[i].Hand.Value == 21 && players[i].Hand.Card.Count == 2 && !(dealer.Hand.Value != 21 && dealer.Hand.Cards.Count == 2))
             {
                 roundResults.Add(Outcome.Blackjack);
             }
