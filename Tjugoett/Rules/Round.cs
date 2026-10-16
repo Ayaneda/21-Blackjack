@@ -59,7 +59,6 @@ public class Round
 
         while (true)
         {   
-            // 
             if (dealer.ShouldHit())
             {
                 deck.DealCard(dealer);
@@ -73,13 +72,12 @@ public class Round
         // Decide the outcome for each player and add it to the results list
         for (int i = 0; i < players.Count; i++) 
         {
-        
             // The player has a natural Blackjack, but the dealer does not.
             if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && !(dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2))
             {
                 roundResults.Add(Outcome.Blackjack);
             }
-            else if (players[i].Hand.Value > 21) // Playern is bust.
+            else if (players[i].Hand.Value > 21) // Player is bust.
             {
                 roundResults.Add(Outcome.Lose);
             }
@@ -87,7 +85,7 @@ public class Round
             {
                 roundResults.Add(Outcome.Win);
             }
-            // Both have a natural Blackjack- (21 on two cards)
+            // Both have a natural Blackjack (21 on two cards)
             else if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2)
             {
                roundResults.Add(Outcome.Push);
@@ -105,7 +103,7 @@ public class Round
             {
                 roundResults.Add(Outcome.Push);
             }
-            else //Otherwise, the dealer has a higher score.
+            else // Otherwise, the dealer has a higher score.
             {
                 roundResults.Add(Outcome.Lose);
             }
@@ -113,7 +111,8 @@ public class Round
 
         // Send the final results back to the game loop
         return roundResults;
-    
+   
     }
+
 
 }
