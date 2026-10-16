@@ -30,7 +30,7 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 ### Aldo
 - Klassen Move
 - Klassen Outcome
-- Klasen Round
+- Klassen Round
 
 ### Aythami
 
