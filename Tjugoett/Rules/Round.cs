@@ -22,7 +22,7 @@ public class Round
         for (int i = 0; i < players.Count; i++)
         {
             // If a player gets 21 directly, they get Blackjack and skip their turn
-            if (players[i].Hand.Value == 21)
+            if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2)
             {
                 // We handle the result later in the outcome loop,
                 // so we just jump to the next player here
