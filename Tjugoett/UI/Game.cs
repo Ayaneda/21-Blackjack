@@ -10,12 +10,15 @@ public class Game
     private List<Player> _players;
     private Dealer _dealer;
     private ConsoleUi _ui;
-    public Game(Deck deck, List<Player> players, Dealer dealer, ConsoleUi ui)
+    private Round _round;
+    public Game(Deck deck, List<Player> players, Dealer dealer, ConsoleUi ui, Round round)
     {
         _deck = deck;
         _players = players;
         _dealer = dealer;
         _ui = ui;
+        _round = round;
+
     }
 
     public void Run()
@@ -40,6 +43,13 @@ public class Game
 
             }
 
+        }
+    }
+    private void PlayRound()
+    {
+        for (int i = 0; i < _players.Count; i++)
+        {
+            _players[i].hand.Clear();
         }
     }
 }
