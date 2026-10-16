@@ -1,6 +1,5 @@
-namespace Tjugoett.Ui;
+namespace Tjugoett.UI;
 
 public class Game
-{
-    
+{    
 }
