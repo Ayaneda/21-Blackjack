@@ -1,4 +1,3 @@
-using System.Data;
 
 namespace Tjugoett.Cards;
 
@@ -76,12 +75,5 @@ public class Hand
             return aceCount > 0;
         }
     }
-    public void ShowHand()
-    {
-        foreach(Card card in handCards)
-        {
-            Console.Write($"{card}");
-        }
-        Console.WriteLine("");
-    }
+
 }
