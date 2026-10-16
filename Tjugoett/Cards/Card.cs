@@ -10,7 +10,15 @@ public class Card
         CardRank = cardRank;
     }
 
-    public int Value => (int)CardRank;   //This get the value of the card when it's needed from the enum 
+    public int Value
+    {
+        get
+        {
+            if(CardRank == Rank.Ess) return 11;    //because how enum works, I need to set deffault value to 11 when it's called
+            if(CardRank >= Rank.Knekt && CardRank <=Rank.Kung) return 10;  //because how enum works, I need to set deffault value to 10 when it's called
+            return (int)CardRank;   //other cards have right the value
+        }
+    }
 
     public override string ToString()    //When the card-object is called, it will show this
     {
