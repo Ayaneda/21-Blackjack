@@ -62,7 +62,7 @@ public class Round
             // 
             if (dealer.ShouldHit())
             {
-                deck.DealCard(Dealer);
+                deck.DealCard(dealer);
             }
             else
             {
@@ -73,29 +73,39 @@ public class Round
         // Decide the outcome for each player and add it to the results list
         for (int i = 0; i < players.Count; i++) 
         {
-            // When both loops are complete, the computer compares 
-            // the hands from top to bottom to decide the outcome
-            if (players[i].Hand.Value == 21 && players[i].Hand.Card.Count == 2 && !(dealer.Hand.Value != 21 && dealer.Hand.Cards.Count == 2))
+        
+            // The player has a natural Blackjack, but the dealer does not.
+            if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && !(dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2))
             {
                 roundResults.Add(Outcome.Blackjack);
             }
-            else if (players[i].Hand.Value > 21)
+            else if (players[i].Hand.Value > 21) // Playern is bust.
             {
                 roundResults.Add(Outcome.Lose);
             }
-            else if (dealer.Hand.Value > 21)
+            else if (dealer.Hand.Value > 21) // The dealer is bust
             {
                 roundResults.Add(Outcome.Win);
             }
-            else if (players[i].Hand.Value > dealer.Hand.Value)
+            // Both have a natural Blackjack- (21 on two cards)
+            else if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2)
+            {
+               roundResults.Add(Outcome.Push);
+            }
+            // The dealer has a natural Blackjack (2 cards), but the player has a regular 21 (3+ cards)
+            else if (dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2 && !(players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2))
+            {
+                roundResults.Add(Outcome.Lose);
+            }
+            else if (players[i].Hand.Value > dealer.Hand.Value) // The player has a higher score than the dealer
             {
                 roundResults.Add(Outcome.Win);
             }
-            else if (players[i].Hand.Value == dealer.Hand.Value)
+            else if (players[i].Hand.Value == dealer.Hand.Value) // Tie score (both have the same cards value)
             {
                 roundResults.Add(Outcome.Push);
             }
-            else
+            else //Otherwise, the dealer has a higher score.
             {
                 roundResults.Add(Outcome.Lose);
             }
