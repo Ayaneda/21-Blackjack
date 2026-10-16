@@ -1,3 +1,5 @@
+
+using Tjugoett.Rules;
 namespace Tjugoett.Storage;
 
 public class GameStorage
@@ -9,5 +11,12 @@ public class GameStorage
         string result = $"{playerName} - {outcome}";
         File.AppendAllText(_filePath, result + Environment.NewLine);
     }
-
+    public List<string> LoadResults() // Load all previously saved results from the file.
+    {
+        if (!File.Exists(_filePath)) // Return an empty list if the file does not exist.
+        {
+            return new List<string>();
+        }
+        return File.ReadAllLines(_filePath).ToList();
+    }
 }
