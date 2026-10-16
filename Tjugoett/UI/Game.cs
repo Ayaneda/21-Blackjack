@@ -1,9 +1,11 @@
-namespace Tjugoett.UI;
-
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Formatters;
 using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.Rules;
+
+namespace Tjugoett.UI;
+
 public class Game
 {
     private Deck _deck;
@@ -49,7 +51,24 @@ public class Game
     {
         for (int i = 0; i < _players.Count; i++)
         {
-            _players[i].hand.Clear();
+            _players[i].Hand.Clear();
+        }
+        _dealer.Hand.Clear();
+        _deck.CardLeft();
+
+        List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);
+
+        for (int i = 0; i < _players.Count; i++)
+        {
+            _ui.ShowHand(_players[i], false);
+        }
+
+        _ui.ShowHand(_dealer, false);
+
+        for (int i = 0; i < _players.Count; i++)
+        {
+            _ui.ShowMessage($"{_players[i].Name}");
+            _ui.ShowOutcome(results[i]);
         }
     }
 }
