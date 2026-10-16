@@ -3,6 +3,7 @@ namespace Tjugoett.Cards;
 public class Hand
 {
     private readonly List<Card> handCards = new List<Card>(); // Keep the card list private so Hand controls how cards are added.
+    public IReadOnlyList<Card> Cards => handCards; // Allows other classes to read the cards without changing the list.
     public void AddCard(Card card)
     {
         handCards.Add(card);
