@@ -24,8 +24,8 @@ public class Game
     public void Run()   //this Will run the game
     {
         bool isRunning = true;  //a bool to stop the game when is change
-        
-        
+
+
         while (isRunning)
         {
             int choice = _ui.ShowMenu();
@@ -45,15 +45,15 @@ public class Game
 
         }
     }
-    private void PlayRound()   
+    private void PlayRound()
     {
-        if(_players.Count == 0)   //The first time will ask for players because there is not player yet
+        if (_players.Count == 0)   //The first time will ask for players because there is not player yet
         {
             int count = _ui.AskPlayerCount();
             for (int i = 0; i < count; i++)
             {
                 string name = _ui.AskName();
-                _players.Add(new Player(name, _ui.AskMove));
+                _players.Add(new Player(name, AskMoveWithDealer));
             }
         }
         for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
@@ -78,4 +78,10 @@ public class Game
             _ui.ShowOutcome(results[i]);
         }
     }
+
+    private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
+    {
+        return _ui.AskMove(participant, _dealer);
+    }
+
 }

@@ -28,8 +28,10 @@ public class ConsoleUi
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
 
-    public Move AskMove(Participant participant) //Shows the player's hand, then asks for hit or stand
+    public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
     {
+        ShowHand(dealer, true);
+        Console.WriteLine();
         ShowHand(participant, false);
 
         Console.WriteLine("1. Ta kort (Hit)");
