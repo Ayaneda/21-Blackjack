@@ -1,1 +1,1 @@
-Vi ska fixa 21 Black Jack spel.
+Vi ska fixa 21 Black Jack spel. 
