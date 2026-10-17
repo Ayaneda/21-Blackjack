@@ -46,7 +46,7 @@ public class Round
                         break;
                     }
 
-                    if (players[i].Hand.Value > 21) // Control the player's value after each card
+                    if (players[i].Hand.Value >= 21) // Control the player's value after each card
                     {                               
                         break; // The player is bust                     
                     }
