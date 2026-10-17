@@ -1,6 +1,7 @@
 using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.Rules;
+using Tjugoett.Storage;
 
 namespace Tjugoett.UI;
 
@@ -11,6 +12,7 @@ public class Game
     private Dealer _dealer;
     private ConsoleUi _ui;
     private Round _round;
+    private GameStorage _storage;
     public Game()   //This is the contructor for the class Game
     {
         _deck = new Deck();
@@ -18,7 +20,7 @@ public class Game
         _dealer = new Dealer("Dealer");
         _ui = new ConsoleUi();
         _round = new Round();
-
+        _storage = new GameStorage();
     }
 
     public void Run()   //this Will run the game
@@ -35,7 +37,7 @@ public class Game
                     PlayRound();    //This will run the method for
                     break;
                 case 2:
-                    _ui.ShowMessage("Inga resultat ännu.");   //I will need a method to get save the information    !!!WAIT FOR ADD!!!
+                    ShowResults();   //Show all save data 
                     break;
                 case 3:
                     isRunning = false;
@@ -76,12 +78,30 @@ public class Game
         {
             _ui.ShowMessage($"{_players[i].Name}");
             _ui.ShowOutcome(results[i]);
+            _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
         }
     }
 
     private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
     {
         return _ui.AskMove(participant, _dealer);
+    }
+
+    private void ShowResults()  //This method will print to user the saved data
+    {
+        List<string> savedResults = _storage.LoadResults();
+
+        if (savedResults.Count == 0)    //If there isn't any data yet, send a feedback
+        {
+            _ui.ShowMessage("Inga resultat sparade ännu.");
+        }
+        else                    //just show to user all saved data as a message
+        {
+            for (int i = 0; i < savedResults.Count; i++)
+            {
+                _ui.ShowMessage(savedResults[i]);
+            }
+        }
     }
 
 }
