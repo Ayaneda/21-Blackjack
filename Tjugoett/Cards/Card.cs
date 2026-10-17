@@ -22,7 +22,7 @@ public class Card
 
     public override string ToString()    //When the card-object is called, it will show this
     {
-        return $"{CardRank} of {CardSuit}";   //Ex. Queen of Spades
+        return $"{CardRank} av {CardSuit}";   //Ex. Queen of Spades
     }
 
 }
