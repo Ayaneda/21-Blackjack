@@ -33,6 +33,11 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Klassen Round
 
 ### Aythami
+- Enum Suit
+- Enum Rank
+- Klassen Card
+- Klassen Deck
+- klassen Game
 
 ### Emelianna
 - Klassen Participant
