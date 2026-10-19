@@ -28,6 +28,15 @@ public class ConsoleUi
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
 
+    public int AskBet(Player player) // Ask the Player how many chips to bet.
+    {
+        Console.WriteLine();
+        Console.WriteLine($"{player.Name} har {player.Betting.Chips} marker.");
+        Console.Write("Hur mycket vill du satsa? ");
+
+        return ReadInt(1, player.Betting.Chips); // Bet must be between 1 and available chips.
+    }
+
     public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
     {
         ShowHand(dealer, dealer.HoleCardHidden);
