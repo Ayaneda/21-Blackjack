@@ -46,6 +46,7 @@ public class Card
                 Suit.Spades => "Späder",
                 Suit.Diamonds => "Ruter",
                 Suit.Hearts => "Hjärter",
+                _           => CardSuit.ToString()
             };
         }
     }
