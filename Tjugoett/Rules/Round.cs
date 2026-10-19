@@ -1,10 +1,16 @@
 using Tjugoett.Cards;
 using Tjugoett.Participants;
+using Tjugoett.UI;
 
 namespace Tjugoett.Rules;
 
 public class Round
 {
+    public ConsoleUi ConsoleUi;
+    public  Round()
+    {
+        ConsoleUi = new ConsoleUi();
+    }
     // Here we receive a list of players, the deck and the dealer.
     public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
     {
@@ -40,14 +46,21 @@ public class Round
                     if (choice == Move.Hit) // The player gets another card
                     {
                         deck.DealCard(players[i]);
+                        ConsoleUi.ShowMessage($"{players[i].Hand.Cards[^1]}");
                     } 
                     else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
                     {
                         break;
                     }
 
-                    if (players[i].Hand.Value >= 21) // Control the player's value after each card
-                    {                               
+                    if (players[i].Hand.Value == 21) // Control the player's value after each card
+                    {    
+                        ConsoleUi.ShowMessage ("Du har fått Blackjack!!! ");                         
+                        break; // The player is bust                     
+                    }
+                    if (players[i].Hand.Value > 21) // Control the player's value after each card
+                    {    
+                        ConsoleUi.ShowMessage ("Du har blivit tjock!!! ");                            
                         break; // The player is bust                     
                     }
                 }
