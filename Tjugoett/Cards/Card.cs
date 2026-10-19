@@ -26,6 +26,15 @@ public class Card
         {
             return CardRank switch
             {
+                Rank.D2 => "2",
+                Rank.D3 => "3",
+                Rank.D4 => "4",
+                Rank.D5 => "5",
+                Rank.D6 => "6",
+                Rank.D7 => "7",
+                Rank.D8 => "8",
+                Rank.D9 => "9",
+                Rank.D10 => "10",
                 Rank.Jack => "Knekt",
                 Rank.Queen => "Dam",
                 Rank.King => "Kung",
@@ -43,7 +52,7 @@ public class Card
             return CardSuit switch
             {
                 Suit.Clubs => "Klöver",
-                Suit.Spades => "Späder",
+                Suit.Spades => "Spader",
                 Suit.Diamonds => "Ruter",
                 Suit.Hearts => "Hjärter",
                 _           => CardSuit.ToString()
