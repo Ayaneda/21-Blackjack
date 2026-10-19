@@ -30,8 +30,8 @@ public class ConsoleUi
 
     public Move AskMove() //Asks the player for hit or stand
     {
-        Console.WriteLine("1. Ta kort (Hit)");
-        Console.WriteLine("2. Stanna (Stand)");
+        Console.WriteLine("1. Ta kort");
+        Console.WriteLine("2. Stanna");
         Console.Write("Välj: ");
         int choice = ReadInt(1, 2);
 
@@ -75,7 +75,9 @@ public class ConsoleUi
         if (outcome == Outcome.Win)
         {
             Console.WriteLine(@"\(^_^)/");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Du vann!");
+            Console.ResetColor();
         }
         else if (outcome == Outcome.Lose)
         {
@@ -90,7 +92,7 @@ public class ConsoleUi
         else if (outcome == Outcome.Blackjack)
         {
             Console.WriteLine("★ ★ ★");
-            Console.WriteLine("Naturlig tjugoett!");
+            Console.WriteLine("Naturlig Tjugoett!");
         }
 
     }
