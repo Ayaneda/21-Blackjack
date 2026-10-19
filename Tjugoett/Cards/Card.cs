@@ -20,37 +20,33 @@ public class Card
         }
     }
 
-    public string RankToSwedish(Rank rank)
+    public string RankToSwedish
     {
+        get
         {
-            switch (rank)
+            return CardRank switch
             {
-                case Rank.D2: return "D2";
-                case Rank.D3: return "D3";
-                case Rank.D4: return "D4";
-                case Rank.D5: return "D5";
-                case Rank.D6: return "D6";
-                case Rank.D7: return "D7";
-                case Rank.D8: return "D8";
-                case Rank.D9: return "D9";
-                case Rank.D10: return "D10";
-                case Rank.Jack: return "Knekt";
-                case Rank.Queen: return "Dam";
-                case Rank.King: return "King";
-                case Rank.Ace: return "Ass";
-                default: return rank.ToString();
-            }
+                Rank.Jack => "Knekt",
+                Rank.Queen => "Dam",
+                Rank.King => "Kung",
+                Rank.Ace => "Ess",
+                _        => CardRank.ToString()  
+            };
+             
         }
+         
     }
-    public string SuitToSwedish(Suit suit)
+    public string SuitToSwedish
     {
-        switch (suit)
+        get
         {
-            case Suit.Clubs: return "Klöver";
-            case Suit.Spades: return "Späder";
-            case Suit.Diamonds: return "Ruter";
-            case Suit.Hearts: return "Hjärter";
-            default: return suit.ToString();
+            return CardSuit switch
+            {
+                Suit.Clubs => "Klöver",
+                Suit.Spades => "Späder",
+                Suit.Diamonds => "Ruter",
+                Suit.Hearts => "Hjärter",
+            };
         }
     }
 
