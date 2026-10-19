@@ -1,5 +1,6 @@
 namespace Tjugoett.Betting;
 
+using Tjugoett.Rules;
 public class BettingAccount
 {
     public int Chips { get; private set; } // The number och the player has available.
@@ -26,6 +27,33 @@ public class BettingAccount
         CurrentBet = amount; // Save the bet for the current round.
 
         return true;
+    }
+    public void SettleBet(Outcome outcome) // Pay chips based on the round result.
+    {
+        if (CurrentBet == 0)
+        {
+            return;  // No active bet.
+        }
+
+        switch (outcome)
+        {
+            case Outcome.Win:
+                Chips += CurrentBet * 2; // Return bet and winnings.
+                break;
+
+            case Outcome.Lose: // The player loses the bet.
+                break;
+
+            case Outcome.Push: // Return the bet.
+                Chips += CurrentBet;
+                break;
+
+            case Outcome.Blackjack:
+                Chips += CurrentBet + CurrentBet * 3 / 2; // Return bet and 3:2 winnings.
+                break;
+
+        }
+        CurrentBet = 0; // Reset the bet after the round.
     }
 
 
