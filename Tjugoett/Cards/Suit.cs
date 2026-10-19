@@ -2,8 +2,8 @@ namespace Tjugoett.Cards;
 
 public enum Suit
 {
-    Klöver,
-    Spader,
-    Ruter,
-    Hjärter
+    Clubs,
+    Spades,
+    Diamonds,
+    Hearts
 }
