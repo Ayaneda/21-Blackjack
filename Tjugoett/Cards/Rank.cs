@@ -11,9 +11,9 @@ public enum Rank
     D8,
     D9,
     D10,
-    Knekt, 
-    Dam, 
-    Kung, 
-    Ess 
+    Jack, 
+    Queen, 
+    King, 
+    Ace 
 
 }

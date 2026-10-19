@@ -23,7 +23,7 @@ public class Hand
             {
                 total += card.Value;
 
-                if (card.CardRank == Rank.Ess)
+                if (card.CardRank == Rank.Ace)
                 {
                     aceCount++;
                 }
@@ -62,7 +62,7 @@ public class Hand
             foreach (Card card in handCards)
             {
                 total += card.Value;
-                if (card.CardRank == Rank.Ess)
+                if (card.CardRank == Rank.Ace)
                 {
                     aceCount++;
                 }
