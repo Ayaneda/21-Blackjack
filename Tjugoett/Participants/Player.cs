@@ -1,3 +1,4 @@
+using Tjugoett.Betting;
 using Tjugoett.Rules;
 
 namespace Tjugoett.Participants;
@@ -5,9 +6,12 @@ namespace Tjugoett.Participants;
 public class Player : Participant
 {
     private Func<Participant, Move> _askMove; // Func is a type that holds a method - it takes a participant and returns the player's Move (Hit or Stand).
+    public BettingAccount Betting { get; private set; } // Each Player has their own betting account.
     public Player(string name, Func<Participant, Move> askMove) : base(name) // The method is sent as an argument by Game.
     {
         _askMove = askMove;
+
+        Betting = new BettingAccount(); // Give the player 100 chips.
     }
 
     public Move GetMove() //Runs the saved method (AskMove in ConsoleUi) and returns the player's choice to Round. 
