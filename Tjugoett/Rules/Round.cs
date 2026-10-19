@@ -42,6 +42,18 @@ public class Round
                 // The current player is kept in this loop until they stand or bust
                 while (true)
                 {
+                    
+                    Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
+                    
+                    if (choice == Move.Hit) // The player gets another card
+                    {
+                        deck.DealCard(players[i]);
+                    } 
+                    else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
+                    {
+                        break;
+                    }
+                    
                     if (players[i].Hand.Value == 21) // Control the player's value after each card
                     {                               
                         ConsoleUi.ShowMessage ("Du har fått Black Jack!.");
@@ -52,18 +64,6 @@ public class Round
                         ConsoleUi.ShowMessage ("Du har blivit Tjock.");
                         break; // The player is bust  
                     } 
-                    
-                    Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
-
-                    
-                    if (choice == Move.Hit) // The player gets another card
-                    {
-                        deck.DealCard(players[i]);
-                    } 
-                    else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
-                    {
-                        break;
-                    }
                     
                 }
             }
