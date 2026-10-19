@@ -48,6 +48,7 @@ public class Round
                     if (choice == Move.Hit) // The player gets another card
                     {
                         deck.DealCard(players[i]);
+                        ConsoleUi.ShowMessage($"{players[i].Hand.Cards[^1]}");
                     } 
                     else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
                     {
