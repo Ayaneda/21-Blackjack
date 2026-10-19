@@ -30,7 +30,7 @@ public class ConsoleUi
 
     public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
     {
-        ShowHand(dealer, true);
+        ShowHand(dealer, dealer.HoleCardHidden);
         Console.WriteLine();
         ShowHand(participant, false);
 

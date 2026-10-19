@@ -63,6 +63,7 @@ public class Game
             _players[i].Hand.Clear();
         }
         _dealer.Hand.Clear();
+        _dealer.HideHoleClear();
         _deck.CardLeft();       //It will check if there are enough cards for the next round
 
         List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
