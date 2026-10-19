@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Tjugoett.Participants;
+using Tjugoett.Rules;
 
 namespace Tjugoett.Cards;
 
@@ -28,12 +29,19 @@ public class Deck
             }
         }
     }
-    private void Shuffle()
+    public void Shuffle()
     {
         deck.Clear();          //this clear the list
         BuildDeck();           //this create a new deck (52 cards)
         Random.Shared.Shuffle(CollectionsMarshal.AsSpan(deck));   //this shuffle the new deck randomly 
         //I want to add that the code above uses Fisher-Yates algorithm according to my information source(Gemini)
+    }
+    public void ShuffleMorePlayer()
+    {
+        deck.Clear();
+        BuildDeck();
+        BuildDeck();
+        Random.Shared.Shuffle(CollectionsMarshal.AsSpan(deck));
     }
     public void RemoveCard(out Card removedCard)    //This method take the card that is in top(last index)
     {
@@ -51,16 +59,7 @@ public class Deck
         DealCard(participant);
         DealCard(participant);
     }
-    
-    public void CardLeft()
-    {
-        if (deck.Count < 15)
-        {
-            Shuffle();
-        }
-    }
-    
-    
+      
     public override string ToString()     //This tells how many card are left in deck.
     {
         return $"Kortleken har {deck.Count}/52 kort.";

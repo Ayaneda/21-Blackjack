@@ -1,11 +1,18 @@
+using System.Formats.Asn1;
 using Tjugoett.Cards;
 using Tjugoett.Participants;
+using Tjugoett.UI;
 
 namespace Tjugoett.Rules;
 
 public class Round
 {
     // Here we receive a list of players, the deck and the dealer.
+    public ConsoleUi ConsoleUi;
+    public Round()
+    {
+        ConsoleUi = new ConsoleUi();
+    }
     public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
     {
         // Create an empty list to store the outcome for each player.
@@ -35,8 +42,20 @@ public class Round
                 // The current player is kept in this loop until they stand or bust
                 while (true)
                 {
+                    if (players[i].Hand.Value == 21) // Control the player's value after each card
+                    {                               
+                        ConsoleUi.ShowMessage ("Du har fått Black Jack!.");
+                        break; // The player got Black Jack
+                    }                     
+                    else if (players[i].Hand.Value > 21) // Control the player's value after each card
+                    {                               
+                        ConsoleUi.ShowMessage ("Du har blivit Tjock.");
+                        break; // The player is bust  
+                    } 
+                    
                     Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
 
+                    
                     if (choice == Move.Hit) // The player gets another card
                     {
                         deck.DealCard(players[i]);
@@ -45,11 +64,7 @@ public class Round
                     {
                         break;
                     }
-
-                    if (players[i].Hand.Value >= 21) // Control the player's value after each card
-                    {                               
-                        break; // The player is bust                     
-                    }
+                    
                 }
             }
         }

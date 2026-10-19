@@ -63,7 +63,7 @@ public class Game
             _players[i].Hand.Clear();
         }
         _dealer.Hand.Clear();
-        _deck.CardLeft();       //It will check if there are enough cards for the next round
+        CardLeft();       //It will check if there are enough cards for the next round
 
         List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
 
@@ -101,6 +101,17 @@ public class Game
             {
                 _ui.ShowMessage(savedResults[i]);
             }
+        }
+    }
+    private void CardLeft()
+    {
+        if (_players.Count > 3 && _deck.deck.Count < 25)
+        {
+            _deck.ShuffleMorePlayer();
+        }
+        else if (_deck.deck.Count < 15)
+        {
+            _deck.Shuffle();
         }
     }
 

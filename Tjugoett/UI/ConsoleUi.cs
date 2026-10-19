@@ -25,7 +25,7 @@ public class ConsoleUi
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
-        return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
+        return Console.ReadLine() ?? $"Spelare"; // If null, the name is "Spelare"
     }
 
     public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
