@@ -11,3 +11,7 @@ A - Lose
 B - Blackjack
 A - Push
 B - Lose
+A - Lose
+B - Lose
+A - Lose
+B - Lose
