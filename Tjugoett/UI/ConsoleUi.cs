@@ -1,5 +1,6 @@
 using Tjugoett.Participants;
 using Tjugoett.Rules;
+using Tjugoett.Cards;
 
 namespace Tjugoett.UI;
 
@@ -51,22 +52,23 @@ public class ConsoleUi
     {
         Console.WriteLine($"{participant.Name}:");
 
-        for (int i = 0; i < participant.Hand.Cards.Count; i++) // Go through all cards in the hand.
+        for (int row = 0; row < 7; row++) // This goes throw all 7 rows(every time that a row is writen go to the next row of the card)
         {
-            if (hideHoleCard && i == 1) // Hide the dealer's second card.
+            for (int i = 0; i < participant.Hand.Cards.Count; i++) // This goes throw all cards in hand
             {
-                Console.Write    ("┌───────┐\n" +
-                                  "│▪▪▪▪▪▪▪│\n" +
-                                  "│▪▪▪▪▪▪▪│\n" +
-                                  "│▪▪▪▪▪▪▪│\n" +
-                                  "│▪▪▪▪▪▪▪│\n" +
-                                  "│▪▪▪▪▪▪▪│\n" +
-                                  "└───────┘");
+                string cardPicture;
+                if (hideHoleCard && i == 1) // If bool is active, hide a card from the dealer
+                {
+                    cardPicture = ShowCard.ShowHideCard();
+                }
+                else
+                {
+                    cardPicture = participant.Hand.Cards[i].ToString(); // This show the cards normally
+                }
+                string[] cardLines = cardPicture.Split('\n'); // This split the card when \n reach 
+                Console.Write(cardLines[row] + " ");          // Print only the current row + space between first row of all cards
             }
-            else
-            {
-                Console.Write(participant.Hand.Cards[i] + " "); // Show the card.
-            }
+            Console.WriteLine(); // This just create a new empty line
         }
         if (!hideHoleCard) // Show the total only when all cards are visible.
         {

@@ -14,7 +14,7 @@ public class ShowCard
                       $"└───────┘";
         return card;
     }
-    public static string PrintHideCard()
+    public static string ShowHideCard()
     {
         string hiddenCard = "┌───────┐\n" +
                             "│▪▪▪▪▪▪▪│\n" +
