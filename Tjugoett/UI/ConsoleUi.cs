@@ -55,11 +55,17 @@ public class ConsoleUi
         {
             if (hideHoleCard && i == 1) // Hide the dealer's second card.
             {
-                Console.WriteLine("Dolt kort");
+                Console.Write    ("┌───────┐\n" +
+                                  "│▪▪▪▪▪▪▪│\n" +
+                                  "│▪▪▪▪▪▪▪│\n" +
+                                  "│▪▪▪▪▪▪▪│\n" +
+                                  "│▪▪▪▪▪▪▪│\n" +
+                                  "│▪▪▪▪▪▪▪│\n" +
+                                  "└───────┘");
             }
             else
             {
-                Console.WriteLine(participant.Hand.Cards[i]); // Show the card.
+                Console.Write(participant.Hand.Cards[i] + " "); // Show the card.
             }
         }
         if (!hideHoleCard) // Show the total only when all cards are visible.
