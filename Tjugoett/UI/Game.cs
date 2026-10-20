@@ -83,11 +83,30 @@ public class Game
         }
     }
 
-    private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
+    private Move AskMoveWithDealer(Player player) 
     {
-        return _ui.AskMove(participant, _dealer);
+        // ----------CARD COUNTING DISPLAY------------
+        // Print the Running Count and True Count
+        _ui.ShowMessage($"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
+        // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
+        _ui.ShowMessage($"[STATUS] {_deck.GetAdvantageIndicator()}\n");
+        
+        //-----------NEW CARD DISPLAY-----------------
+        // Check if the player aready drew a card  this round
+        if (player.Hand.Cards.Count > 2)
+        {    
+            // Prints the last card drawn using [^1]
+            _ui.ShowMessage($"Ditt nya kort: {player.Hand.Cards[^1]}");
+        }
+         
+        //-----------CURRENT HAND DISPLAY-------------
+        // Prints the player's name,cards and total score
+        _ui.ShowMessage($"{player.Name}s hand: {player.Hand} (Totalt: {player.Hand.Value})");
+        // Ask the player to HIT or STAND and return their choice.
+        return _ui.AskMove(player, _dealer);
     }
 
+    
     private void ShowResults()  //This method will print to user the saved data
     {
         List<string> savedResults = _storage.LoadResults();

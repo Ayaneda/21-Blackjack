@@ -81,7 +81,7 @@ public class Shoes
     {
         // Check the card's value/Rank
         // If your project uses an int or an Enum for rank, adapt it here
-        int rankValue = (int)card.Rank;
+        int rankValue = (int)card.CardRank;
 
         // Card 2 to 6 givs +1
         if (rankValue >= 2 && rankValue <= 6)
