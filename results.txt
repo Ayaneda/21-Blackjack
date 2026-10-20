@@ -2,3 +2,9 @@ Bob - Lose
 tgr - Win
 Emelianna - Win
 1 - Lose
+ef - Win
+tr - Win
+Dator 1 - Lose
+ef - Win
+tr - Win
+Dator 1 - Win
