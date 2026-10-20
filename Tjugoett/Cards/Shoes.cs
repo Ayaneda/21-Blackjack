@@ -59,11 +59,24 @@ public class Shoes
     {
         // Take the top card from the list.
         Card cardToDeal = _cards[0];
-        _cards.RemoveAt(0);
-    
+        _cards.RemoveAt(0); // Remove the card so it isn't use again.
 
+        // Uses the same method name as in Deck to see how many cards are left in total.
+        if (_cards.Count < 60)
+        {
+            IsCutCardReached = true;
+        }
+
+        return cardToDeal;
     
     }
+
+
+    public int CardLeft()
+    {
+        return _cards.Count;
+    }
+
 
 }
 
