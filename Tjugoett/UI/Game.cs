@@ -64,7 +64,14 @@ public class Game
         }
         _dealer.Hand.Clear();
         _dealer.HideHoleCard();
-        _deck.CardLeft();       //It will check if there are enough cards for the next round
+
+
+        if (_deck.IsCutCardReached)
+        {
+            _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
+            _deck.ShuffleShoe();
+        }
+    
 
         List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
 
