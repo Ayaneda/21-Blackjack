@@ -23,22 +23,28 @@ public class ConsoleUi
         return ReadInt(1, 5);
     }
 
+    public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
+    {
+        Console.Write($"Ange antal datorspelare (0-{max}): ");
+        return ReadInt(0, max);
+    }
+
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
         return Console.ReadLine() ?? $"Spelare"; // If null, the name is "Spelare"
     }
 
-    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) //Shows the dealer's open card and the player's hand, then asks for hit or stand
+    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) //Shows the dealer's open card and all players' hands, then asks for hit or stand
     {
         ShowHand(dealer, dealer.HoleCardHidden);
         Console.WriteLine();
-        for (int i = 0; i < players.Count; i++) // Visa alla spelares kort vid bordet
+        for (int i = 0; i < players.Count; i++) // Show every player's cards at the table
         {
             ShowHand(players[i], false);
             Console.WriteLine();
         }
-        Console.WriteLine($"Det är {participant.Name}s tur:"); // Så man ser vems tur det är!
+        Console.WriteLine($"Det är {participant.Name}s tur:"); // So you can see whose turn it is
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
@@ -84,6 +90,11 @@ public class ConsoleUi
     public void ShowMessage(string message) //Method that is used by Game.cs to print messages
     {
         Console.WriteLine(message);
+    }
+
+    public void Pause() // Short pause so the user can follow the computer players
+    {
+        Thread.Sleep(1000); // 1000 milliseconds = 1 second
     }
 
     public void ShowOutcome(Outcome outcome)// Prints how the round ended. 
