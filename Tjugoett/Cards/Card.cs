@@ -61,14 +61,8 @@ public class Card
     }
 
     public override string ToString()    //When the card-object is called, it will show this
-    {          //This write symbol and ( ..., -2) it's the position from the center. It's mean that the symbol is 2 positions from the center.
-        return $"┌───────┐\n" +
-               $"│{RankSymbol,-2}     │\n" +
-               $"│       │\n" +
-               $"│   {SuitSymbol}   │\n" +
-               $"│       │\n" +
-               $"│     {RankSymbol,2}│\n" +
-               $"└───────┘";
+    {
+        return $"{ShowCard.PrintCard(RankSymbol, SuitSymbol)}";
     }
 
 }
