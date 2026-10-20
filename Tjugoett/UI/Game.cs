@@ -100,17 +100,17 @@ public class Game
         
         //-----------NEW CARD DISPLAY-----------------
         // Check if the player aready drew a card  this round
-        if (player.Hand.Cards.Count > 2)
+        if (participant.Hand.Cards.Count > 2)
         {    
             // Prints the last card drawn using [^1]
-            _ui.ShowMessage($"Ditt nya kort: {player.Hand.Cards[^1]}");
+            _ui.ShowMessage($"Ditt nya kort: {participant.Hand.Cards[^1]}");
         }
          
         //-----------CURRENT HAND DISPLAY-------------
         // Prints the player's name,cards and total score
-        _ui.ShowMessage($"{player.Name}s hand: {player.Hand} (Totalt: {player.Hand.Value})");
+        _ui.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
         // Ask the player to HIT or STAND and return their choice.
-        return _ui.AskMove(player, _dealer);
+        return _ui.AskMove(participant, _dealer);
     }
 
     
