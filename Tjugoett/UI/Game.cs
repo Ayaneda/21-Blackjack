@@ -84,7 +84,7 @@ public class Game
 
     private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
     {
-        return _ui.AskMove(participant, _dealer);
+        return _ui.AskMove(participant, _dealer, _players);
     }
 
     private void ShowResults()  //This method will print to user the saved data
