@@ -74,6 +74,12 @@ public class Game
         for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
         {
             _players[i].Hand.Clear();
+
+            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
+            {
+                IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
+            }
         }
         _dealer.Hand.Clear();
         _dealer.HideHoleCard();
@@ -98,7 +104,7 @@ public class Game
 
     private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
     {
-        return _ui.AskMove(participant, _dealer);
+        return _ui.AskMove(participant, _dealer, _players);
     }
 
     private void ShowResults()  //This method will print to user the saved data
