@@ -1,4 +1,5 @@
 using Tjugoett.Cards;
+using Tjugoett.Participants;
 
 namespace Tjugoett.Cards;
 
@@ -11,7 +12,7 @@ public class Shoes
     public bool IsCutCardReached { get; private set; }
 
     // Constructor initialize the shoe snd fills it with  6 decks
-    public Shoes(int numberOfDeck)
+    public Shoes(int numberOfDeck = 6)
     {
         // We loop through the number of decks we want to add
         for (int i = 0; i < numberOfDeck; i++)
@@ -19,11 +20,9 @@ public class Shoes
             // We create a temporary deck 
             Deck tempDeck = new Deck();
             
-            // We empty the temporary deck an move all cards to our main shoe
-            while (tempDeck.CardLeft() > 0)
+            foreach (Card card in tempDeck.deck)
             {
-                Card card = tempDeck.DealCard();
-                _cards.Add(card); // Add the card to the shoe list
+                _cards.Add(card);
             }
         }
 

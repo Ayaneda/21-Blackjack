@@ -1,0 +1,9 @@
+A - Win
+B - Win
+yoyo - Lose
+yoda - Lose
+yoshi - Lose
+A - Push
+B - Blackjack
+A - Lose
+B - Lose

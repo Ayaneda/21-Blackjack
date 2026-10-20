@@ -27,7 +27,7 @@ public class Round
                 players[i].Hand.AddCard(card);
             }
         }
-        for (int j = 0; j < 2; j++);
+        for (int j = 0; j < 2; j++)
         {
             // Gives two card to the dealder
             Card delarCard = deck.DealCard();
