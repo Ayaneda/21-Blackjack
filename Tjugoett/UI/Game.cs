@@ -7,7 +7,7 @@ namespace Tjugoett.UI;
 
 public class Game
 {
-    private Deck _deck;
+    private Shoes _deck;
     private List<Player> _players;
     private Dealer _dealer;
     private ConsoleUi _ui;
@@ -15,7 +15,7 @@ public class Game
     private GameStorage _storage;
     public Game()   //This is the contructor for the class Game
     {
-        _deck = new Deck();
+        _deck = new Shoes(6);
         _players = new List<Player>();
         _dealer = new Dealer("Dealer");
         _ui = new ConsoleUi();

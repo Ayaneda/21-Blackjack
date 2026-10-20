@@ -12,7 +12,7 @@ public class Round
         ConsoleUi = new ConsoleUi();
     }
     // Here we receive a list of players, the deck and the dealer.
-    public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
+    public List<Outcome> PlayRound(Shoes deck, List<Player> players, Dealer dealer)
     {
         // Create an empty list to store the outcome for each player.
         List<Outcome> roundResults = new List<Outcome>();
@@ -20,9 +20,19 @@ public class Round
         // Give two start cards to ALL players in the list, and to the dealer
         for (int i = 0; i < players.Count; i++)
         {
-            deck.DealCards(players[i]); // Players get two cards
+            for (int j = 0; j < 2; j++)
+            {
+                // Loop twice to deal two cards
+                Card card = deck.DealCard();
+                players[i].Hand.AddCard(card);
+            }
         }
-        deck.DealCards(dealer); // Dealer gets two cards
+        for (int j = 0; j < 2; j++);
+        {
+            // Gives two card to the dealder
+            Card delarCard = deck.DealCard();
+            dealer.Hand.AddCard(delarCard);
+        }
 
         // Player turns - Loop through each player one by one
         for (int i = 0; i < players.Count; i++)
@@ -74,7 +84,11 @@ public class Round
         {   
             if (dealer.ShouldHit())
             {
-                deck.DealCard(dealer);
+                // Takes a card from the shoe
+                Card dealCard= deck.DealCard();
+
+                // Gives the card to the dealer manually
+                dealer.Hand.AddCard(dealCard);
             }
             else
             {
