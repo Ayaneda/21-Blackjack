@@ -23,6 +23,12 @@ public class ConsoleUi
         return ReadInt(1, 5);
     }
 
+    public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
+    {
+        Console.Write($"Ange antal datorspelare (0-{max}): ");
+        return ReadInt(0, max);
+    }
+
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
