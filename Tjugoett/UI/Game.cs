@@ -55,7 +55,7 @@ public class Game
             for (int i = 0; i < count; i++)
             {
                 string name = _ui.AskName();
-                int chips = _storage.LoadChips(name); // Load saved chips.
+                decimal chips = _storage.LoadChips(name); // Load saved chips.
                 _players.Add(new Player(name, AskMoveWithDealer, chips)); // Create player with saved chips.
             }
         }
@@ -67,7 +67,7 @@ public class Game
         }
         foreach (Player player in _players) // Ask players to bet before dealing cards.
         {
-            int amount = _ui.AskBet(player);
+            decimal amount = _ui.AskBet(player); // Read the player's bet.
 
             bool accepted = player.Betting.PlaceBet(amount); // Try to place the bet.
 

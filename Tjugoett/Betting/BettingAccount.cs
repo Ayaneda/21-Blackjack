@@ -3,11 +3,11 @@ namespace Tjugoett.Betting;
 using Tjugoett.Rules;
 public class BettingAccount
 {
-    public int Chips { get; private set; } // The number och the player has available.
+    public decimal Chips { get; private set; } // Available player chips.
 
-    public int CurrentBet { get; private set; } // The amount of chips currently bet by the player.
+    public decimal CurrentBet { get; private set; } // The amount currently bet by the player.
 
-    public BettingAccount(int startingChips = 100) // Creat an account with 100 chips by default.
+    public BettingAccount(decimal startingChips = 100) // Create an account with 100 chips by default.
     {
         if (startingChips < 0) // Prevent a negative startning balance.
         {
@@ -16,7 +16,7 @@ public class BettingAccount
         Chips = startingChips;
     }
 
-    public bool PlaceBet(int amount) // Place a bet before th round start.
+    public bool PlaceBet(decimal amount) // Place a bet before th round starts.
     {
         if (amount <= 0 || amount > Chips || CurrentBet != 0) // Reject zero, negative, too large or repeated bets.
         {
@@ -49,7 +49,7 @@ public class BettingAccount
                 break;
 
             case Outcome.Blackjack:
-                Chips += CurrentBet + CurrentBet * 3 / 2; // Return bet and 3:2 winnings.
+                Chips += CurrentBet + CurrentBet * 1.5m; // Return bet and 3:2 winnings.
                 break;
 
         }

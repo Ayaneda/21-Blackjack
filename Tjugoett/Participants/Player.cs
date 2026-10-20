@@ -7,7 +7,7 @@ public class Player : Participant
 {
     private Func<Participant, Move> _askMove; // Func is a type that holds a method - it takes a participant and returns the player's Move (Hit or Stand).
     public BettingAccount Betting { get; private set; } // Each Player has their own betting account.
-    public Player(string name, Func<Participant, Move> askMove, int startingChips = 100) : base(name) // The method is sent as an argument by Game.
+    public Player(string name, Func<Participant, Move> askMove, decimal startingChips = 100) : base(name) // The method is sent as an argument by Game.
     {
         _askMove = askMove;
 

@@ -28,13 +28,24 @@ public class ConsoleUi
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
 
-    public int AskBet(Player player) // Ask the Player how many chips to bet.
+    public decimal AskBet(Player player) // Ask the Player how many chips to bet.
     {
         Console.WriteLine();
         Console.WriteLine($"{player.Name} har {player.Betting.Chips} marker.");
         Console.Write("Hur mycket vill du satsa? ");
 
-        return ReadInt(1, player.Betting.Chips); // Bet must be between 1 and available chips.
+        while (true) // Keep asking until the bet is valid.
+        {
+            string input = Console.ReadLine() ?? "";
+
+            if (decimal.TryParse(input, out decimal amount) &&
+                amount > 0 && amount <= player.Betting.Chips)
+            {
+                return amount; // Return the valid bet.
+            }
+
+            Console.Write("Ogiltig satsning. Försök igen: ");
+        }
     }
 
     public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand

@@ -1,5 +1,6 @@
 
 using Tjugoett.Rules;
+using System.Globalization; // Handler decimal values consistently.
 namespace Tjugoett.Storage;
 
 public class GameStorage
@@ -19,7 +20,7 @@ public class GameStorage
         }
         return File.ReadAllLines(_filePath).ToList();
     }
-    public void SaveChips(string playerName, int chips) // Save player chips.
+    public void SaveChips(string playerName, decimal chips) // Save player chips.
     {
         List<string> lines = new List<string>(); // Stroe save data.
         bool found = false;
@@ -32,7 +33,7 @@ public class GameStorage
             string[] parts = lines[i].Split(';');
             if (parts.Length == 2 && parts[0] == playerName)
             {
-                lines[i] = $"{playerName};{chips}"; // Update chips.
+                lines[i] = $"{playerName};{chips.ToString(CultureInfo.InvariantCulture)}"; // Update chips.
                 found = true;
                 break;
             }
@@ -40,11 +41,11 @@ public class GameStorage
         }
         if (!found) // Add a new player
         {
-            lines.Add($"{playerName};{chips}");
+            lines.Add($"{playerName};{chips.ToString(CultureInfo.InvariantCulture)}"); // Add a new player.
         }
         File.WriteAllLines(_chipsFilePath, lines); // Save to fils.
     }
-    public int LoadChips(string playerName) // Load saved player chips.
+    public decimal LoadChips(string playerName) // Load saved player chips.
     {
         if (!File.Exists(_chipsFilePath)) // Chieck if file exists.
         {
@@ -55,7 +56,7 @@ public class GameStorage
             string[] parts = line.Split(';');
             if (parts.Length == 2 && parts[0] == playerName)
             {
-                if (int.TryParse(parts[1], out int chips) && chips >= 0)
+                if (decimal.TryParse(parts[1], NumberStyles.Number, CultureInfo.InvariantCulture, out decimal chips) && chips >= 0) // Read saved decimal chips.
                 {
                     return chips; // Return saved chips.
                 }
