@@ -15,3 +15,5 @@ A - Lose
 B - Lose
 A - Lose
 B - Lose
+A - Lose
+B - Lose
