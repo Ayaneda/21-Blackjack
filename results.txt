@@ -8,3 +8,9 @@ Dator 1 - Lose
 ef - Win
 tr - Win
 Dator 1 - Win
+Emelianna - Blackjack
+Tor - Win
+Dator 1 - Win
+Emelianna - Win
+Tor - Blackjack
+Dator 1 - Win

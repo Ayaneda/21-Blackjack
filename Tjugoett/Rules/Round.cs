@@ -49,7 +49,12 @@ public class Round
                     Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
 
                     string moveText = choice == Move.Hit ? "tar kort" : "stannar";
-                    ConsoleUi.ShowMessage($"{players[i].Name} {moveText}");          //Prints the players/computers move
+                    ConsoleUi.ShowMessage($"{players[i].Name} {moveText}"); //Prints the players/computers move
+
+                    if (players[i] is ComputerPlayer)
+                    {
+                        ConsoleUi.Pause();              //give the user time to see what the computer did
+                    }
 
                     if (choice == Move.Hit) // The player gets another card
                     {

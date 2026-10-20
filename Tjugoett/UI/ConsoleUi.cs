@@ -88,6 +88,11 @@ public class ConsoleUi
         Console.WriteLine(message);
     }
 
+    public void Pause() // Short pause so the user can follow the computer players
+    {
+        Thread.Sleep(1000); // 1000 milliseconds = 1 second
+    }
+
     public void ShowOutcome(Outcome outcome)// Prints how the round ended. 
     {
         if (outcome == Outcome.Win)
