@@ -11,6 +11,14 @@ public class Shoes
 
     // A boolean variable that set "true" wwhen passed divider card
     public bool IsCutCardReached { get; private set; }
+
+    public Shoe(int numberOfDeck)
+    {
+        for (int i = 0; i < numberOfDeck; i++)
+        {
+            Deck tempDeck = new Deck();
+        }
+    }
     
 
 }
