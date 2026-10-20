@@ -20,7 +20,7 @@ public class Card
         }
     }
 
-    public string RankToSwedish
+    public string RankSymbol
     {
         get
         {
@@ -35,34 +35,40 @@ public class Card
                 Rank.D8 => "8",
                 Rank.D9 => "9",
                 Rank.D10 => "10",
-                Rank.Jack => "Knekt",
-                Rank.Queen => "Dam",
-                Rank.King => "Kung",
-                Rank.Ace => "Ess",
+                Rank.Jack => "J",
+                Rank.Queen => "Q",
+                Rank.King => "K",
+                Rank.Ace => "A",
                 _        => CardRank.ToString()  
             };
              
         }
          
     }
-    public string SuitToSwedish
+    public string SuitSymbol
     {
         get
         {
             return CardSuit switch
             {
-                Suit.Clubs => "Klöver",
-                Suit.Spades => "Spader",
-                Suit.Diamonds => "Ruter",
-                Suit.Hearts => "Hjärter",
+                Suit.Clubs => "♣",
+                Suit.Spades => "♠",
+                Suit.Diamonds => "♦",
+                Suit.Hearts => "♥",
                 _           => CardSuit.ToString()
             };
         }
     }
 
     public override string ToString()    //When the card-object is called, it will show this
-    {
-        return $"{RankToSwedish} av {SuitToSwedish}";   //Ex. Dam av Späder
+    {          //This write symbol and ( ..., -2) it's the position from the center. It's mean that the symbol is 2 positions from the center.
+        return $"┌───────┐\n" +
+               $"│{RankSymbol,-2}     │\n" +
+               $"│       │\n" +
+               $"│   {SuitSymbol}   │\n" +
+               $"│       │\n" +
+               $"│     {RankSymbol,2}│\n" +
+               $"└───────┘";
     }
 
 }
