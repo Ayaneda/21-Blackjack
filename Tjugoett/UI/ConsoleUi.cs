@@ -35,12 +35,16 @@ public class ConsoleUi
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
 
-    public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
+    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) //Shows the dealer's open card and all players' hands, then asks for hit or stand
     {
         ShowHand(dealer, dealer.HoleCardHidden);
         Console.WriteLine();
-        ShowHand(participant, false);
-
+        for (int i = 0; i < players.Count; i++) // Show every player's cards at the table
+        {
+            ShowHand(players[i], false);
+            Console.WriteLine();
+        }
+        Console.WriteLine($"Det är {participant.Name}s tur:"); // So you can see whose turn it is
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
