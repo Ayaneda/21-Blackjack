@@ -55,7 +55,8 @@ public class Game
             for (int i = 0; i < count; i++)
             {
                 string name = _ui.AskName();
-                _players.Add(new Player(name, AskMoveWithDealer));
+                int chips = _storage.LoadChips(name); // Load saved chips.
+                _players.Add(new Player(name, AskMoveWithDealer, chips)); // Create player with saved chips.
             }
         }
         _players.RemoveAll(player => player.Betting.Chips == 0);// Remove plyayers with no chips left.
@@ -98,9 +99,10 @@ public class Game
             Player player = _players[i];
             _ui.ShowMessage($"{player.Name}");
             _ui.ShowOutcome(results[i]);
-            player.Betting.SettleBet(results[i]); // Pay winnings or return the bet.
+            player.Betting.SettleBet(results[i]); // Update chips after the round.
+            _storage.SaveChips(player.Name, player.Betting.Chips); // Save remaining chips.
             _ui.ShowMessage($"Marker kvar: {player.Betting.Chips}"); // Show remaining chips.
-            _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
+            _storage.SaveResult(_players[i].Name, results[i]);   // Save the game result.
         }
     }
 
