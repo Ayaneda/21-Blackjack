@@ -62,7 +62,7 @@ public class Shoes
         _cards.RemoveAt(0);
     
 
-        return cardToDeal;
+    
     }
 
 }
