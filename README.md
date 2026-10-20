@@ -39,6 +39,7 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Klassen Card
 - Klassen Deck
 - klassen Game
+- **Tillval 1 - Kortgrafik i konsolen**
 
 ### Emelianna
 - Klassen Participant
