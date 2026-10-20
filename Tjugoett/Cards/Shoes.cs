@@ -52,10 +52,18 @@ public class Shoes
         // The shoe has just been shuffled, so the divider card has not been reached yet.
         IsCutCardReached = false;
 
-
     }
     
+    // Same method name as in Deck. So I dont need to change it in Deck.cs
+    public Card DealCard()
+    {
+        // Take the top card from the list.
+        Card cardToDeal = _cards[0];
+        _cards.RemoveAt(0);
+    
 
+        return cardToDeal;
+    }
 
 }
 
