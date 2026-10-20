@@ -58,6 +58,24 @@ public class Game
                 _players.Add(new Player(name, AskMoveWithDealer));
             }
         }
+        _players.RemoveAll(player => player.Betting.Chips == 0);// Remove plyayers with no chips left.
+        if (_players.Count == 0)
+        {
+            _ui.ShowMessage("Alla spelare har slut på marker.");
+            return;
+        }
+        foreach (Player player in _players) // Ask players to bet before dealing cards.
+        {
+            int amount = _ui.AskBet(player);
+
+            bool accepted = player.Betting.PlaceBet(amount); // Try to place the bet.
+
+            if (!accepted) // Check if the bet is invalid.
+            {
+                _ui.ShowMessage("Ogiltig satsning.");
+                return;
+            }
+        }
         for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
         {
             _players[i].Hand.Clear();
@@ -77,8 +95,11 @@ public class Game
 
         for (int i = 0; i < _players.Count; i++)   //Shows the outcome of every player.
         {
-            _ui.ShowMessage($"{_players[i].Name}");
+            Player player = _players[i];
+            _ui.ShowMessage($"{player.Name}");
             _ui.ShowOutcome(results[i]);
+            player.Betting.SettleBet(results[i]); // Pay winnings or return the bet.
+            _ui.ShowMessage($"Marker kvar: {player.Betting.Chips}"); // Show remaining chips.
             _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
         }
     }
