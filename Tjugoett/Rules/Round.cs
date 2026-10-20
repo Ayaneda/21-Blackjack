@@ -13,11 +13,6 @@ public class Round
         ConsoleUi = new ConsoleUi();
     }
     // Here we receive a list of players, the deck and the dealer.
-    public ConsoleUi ConsoleUi;
-    public Round()
-    {
-        ConsoleUi = new ConsoleUi();
-    }
     public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
     {
         // Create an empty list to store the outcome for each player.
