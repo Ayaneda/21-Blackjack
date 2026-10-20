@@ -55,8 +55,10 @@ public class Round
 
                     if (choice == Move.Hit) // The player gets another card
                     {
-                        deck.DealCard(players[i]);
-                        ConsoleUi.ShowMessage($"{players[i].Hand.Cards[^1]}");
+                        // Take a car from the deck and gives that to the player.
+                        Card drawnCard = deck.DealCard();
+                        players[i].Hand.AddCard(drawnCard);
+                        
                     } 
                     else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
                     {
