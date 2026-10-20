@@ -2,6 +2,7 @@ using Tjugoett.Cards;
 using Tjugoett.Participants;
 using Tjugoett.Rules;
 using Tjugoett.Storage;
+using Tjugoett.Strategies;
 
 namespace Tjugoett.UI;
 
@@ -57,10 +58,28 @@ public class Game
                 string name = _ui.AskName();
                 _players.Add(new Player(name, AskMoveWithDealer));
             }
+
+            int freeSeats = 5 - count; // Max 5 players in total
+            if (freeSeats > 0)         // Only ask if there is room left
+            {
+                int computerCount = _ui.AskComputerPlayerCount(freeSeats); //Number of free seats is shown in the question to the player
+                for (int i = 0; i < computerCount; i++)
+                {
+                    // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
+                    IPlayerStrategy strategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                    _players.Add(new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                }
+            }
         }
         for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
         {
             _players[i].Hand.Clear();
+
+            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
+            {
+                IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
+            }
         }
         _dealer.Hand.Clear();
         _dealer.HideHoleCard();
@@ -85,7 +104,7 @@ public class Game
 
     private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
     {
-        return _ui.AskMove(participant, _dealer);
+        return _ui.AskMove(participant, _dealer, _players);
     }
 
     private void ShowResults()  //This method will print to user the saved data
