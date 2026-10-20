@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using System.Formats.Asn1;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Tjugoett.Participants;
@@ -60,6 +61,13 @@ public class Deck
         DealCard(participant);
     }
       
+    public void CardLeft()
+    {
+        if (deck.Count < 15)
+        {
+            Shuffle();
+        }
+    }
     public override string ToString()     //This tells how many card are left in deck.
     {
         return $"Kortleken har {deck.Count}/52 kort.";
