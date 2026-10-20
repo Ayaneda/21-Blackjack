@@ -5,7 +5,7 @@
 1. **Program** skapar ett **Game** och kör Run().
 2. **Game** visar menyn via **ConsoleUi** (ShowMenu()). Vid "Spela" frågar Game antal spelare och namn (AskPlayerCount(), AskName()) och skapar en **Player** för varje, med ui.AskMove inskickad.
 3. Game skapar en **Deck** och en **Dealer** och startar en **Round**.
-4. **Round** blandar kortleken och delar ut två **Card** till varje spelare och givaren. Korten hamnar i varje deltagares **Hand**.
+4. **Deck** blandar kortleken och delar ut två **Card** till varje spelare och givaren. Korten hamnar i varje deltagares **Hand**.
 5. **Spelarnas tur:** Round anropar player.GetMove() för en spelare i taget. Player kör AskMove(this), så **ConsoleUi** visar handen och frågar Hit eller Stand. Vid Hit ger Round ett nytt kort, tills spelaren stannar eller går över 21.
 6. **Givarens tur:** **Dealer** tar kort enligt regeln (ShouldHit(), under 17) utan att fråga någon.
 7. **Resultat:** Round jämför varje spelares summa från **Hand** med givarens och ger ett **Outcome** (Win, Lose, Push, Blackjack).
@@ -33,6 +33,11 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Klassen Round
 
 ### Aythami
+- Enum Rank
+- Enum Suit
+- Klassen Card
+- Klassen Deck 
+- Klassen Game
 
 ### Emelianna
 - Klassen Participant

@@ -37,13 +37,6 @@ public class Deck
         Random.Shared.Shuffle(CollectionsMarshal.AsSpan(deck));   //this shuffle the new deck randomly 
         //I want to add that the code above uses Fisher-Yates algorithm according to my information source(Gemini)
     }
-    public void ShuffleMorePlayer()
-    {
-        deck.Clear();
-        BuildDeck();
-        BuildDeck();
-        Random.Shared.Shuffle(CollectionsMarshal.AsSpan(deck));
-    }
     public void RemoveCard(out Card removedCard)    //This method take the card that is in top(last index)
     {
         removedCard = deck[^1];   //^1(the first from the last index) so it set the item in the variable
