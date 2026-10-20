@@ -7,6 +7,11 @@ namespace Tjugoett.Rules;
 
 public class Round
 {
+    public ConsoleUi ConsoleUi;
+    public  Round()
+    {
+        ConsoleUi = new ConsoleUi();
+    }
     // Here we receive a list of players, the deck and the dealer.
     public ConsoleUi ConsoleUi;
     public Round()
@@ -54,18 +59,11 @@ public class Round
                     {
                         break;
                     }
-                    
-                    if (players[i].Hand.Value == 21) // Control the player's value after each card
+
+                    if (players[i].Hand.Value >= 21) // Control the player's value after each card
                     {                               
-                        ConsoleUi.ShowMessage ("Du har fått Black Jack!.");
-                        break; // The player got Black Jack
-                    }                     
-                    else if (players[i].Hand.Value > 21) // Control the player's value after each card
-                    {                               
-                        ConsoleUi.ShowMessage ("Du har blivit Tjock.");
-                        break; // The player is bust  
-                    } 
-                    
+                        break; // The player is bust                     
+                    }
                 }
             }
         }

@@ -42,6 +42,11 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 
 ### Danial
 
+- Klassen Hand
+- Klassen Dealer
+- Klassen GameStorage
+- Klassen ConsoleUi tillsammans med Emelianna
+
 
 ## Vilka regler som gäller, om ni avvikit från specifikationen på någon punkt
 
