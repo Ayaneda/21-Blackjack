@@ -104,6 +104,14 @@ public class Game
             _ui.ShowMessage($"Marker kvar: {player.Betting.Chips}"); // Show remaining chips.
             _storage.SaveResult(_players[i].Name, results[i]);   // Save the game result.
         }
+        for (int i = _players.Count - 1; i >= 0; i--) // Remove players who have no chips left.
+        {
+            if (_players[i].Betting.Chips == 0)
+            {
+                _ui.ShowMessage($"{_players[i].Name} har slut på marker och lämnar bordet.");
+                _players.RemoveAt(i);
+            }
+        }
     }
 
     private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
