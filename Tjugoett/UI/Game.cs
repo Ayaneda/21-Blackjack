@@ -90,7 +90,7 @@ public class Game
         }
     }
 
-    private Move AskMoveWithDealer(Player player) 
+    private Move AskMoveWithDealer(Participant participant) 
     {
         // ----------CARD COUNTING DISPLAY------------
         // Print the Running Count and True Count
