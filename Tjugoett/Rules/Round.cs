@@ -81,12 +81,12 @@ public class Round
 
                     if (players[i].Hand.Value == 21) // Control the player's value after each card
                     {    
-                        ConsoleUi.ShowMessage ("Du har fått 21.");                         
+                        ConsoleUi.ShowMessage ($"{players[i].Name}"+" har fått 21.");                         
                         break; // The player is bust                     
                     }
                     if (players[i].Hand.Value > 21) // Control the player's value after each card
                     {
-                        ConsoleUi.ShowMessage("Du har blivit tjock!!! ");
+                        ConsoleUi.ShowMessage($"{players[i].Name}"+" har blivit tjock!!! ");
                         break; // The player is bust                     
                     }
                 }
