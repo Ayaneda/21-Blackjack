@@ -122,7 +122,8 @@ public class Game
         if (participant.Hand.Cards.Count > 2)
         {    
             // Prints the last card drawn using [^1]
-            _ui.ShowMessage($"Ditt nya kort: {participant.Hand.Cards[^1]}");
+            _ui.ShowMessage($"Ditt nya kort:");
+            _ui.ShowMessage($"{participant.Hand.Cards[^1]}");
         }
          
         //-----------CURRENT HAND DISPLAY-------------
