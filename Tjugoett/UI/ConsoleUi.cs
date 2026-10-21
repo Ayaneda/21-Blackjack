@@ -1,5 +1,6 @@
 using Tjugoett.Participants;
 using Tjugoett.Rules;
+using Tjugoett.Cards;
 
 namespace Tjugoett.UI;
 
@@ -22,38 +23,46 @@ public class ConsoleUi
         return ReadInt(1, 5);
     }
 
+    public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
+    {
+        Console.Write($"Ange antal datorspelare (0-{max}): ");
+        return ReadInt(0, max);
+    }
+
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
-
-    public decimal AskBet(Player player) // Ask the Player how many chips to bet.
+    public decimal AskBet(Player player) // Asks how many chips the player wants to bet.
     {
         Console.WriteLine();
         Console.WriteLine($"{player.Name} har {player.Betting.Chips} marker.");
         Console.Write("Hur mycket vill du satsa? ");
 
-        while (true) // Keep asking until the bet is valid.
+        while (true) // Keeps asking until the bet is valid.
         {
             string input = Console.ReadLine() ?? "";
 
             if (decimal.TryParse(input, out decimal amount) &&
                 amount > 0 && amount <= player.Betting.Chips)
             {
-                return amount; // Return the valid bet.
+                return amount; // Returns the valid bet.
             }
 
             Console.Write("Ogiltig satsning. Försök igen: ");
         }
     }
-
-    public Move AskMove(Participant participant, Dealer dealer) //Shows the dealer's open card and the player's hand, then asks for hit or stand
+    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) // Shows all players' hands and asks for Hit or Stand.
     {
         ShowHand(dealer, dealer.HoleCardHidden);
         Console.WriteLine();
-        ShowHand(participant, false);
-
+        for (int i = 0; i < players.Count; i++) // Show every player's cards at the table
+        {
+            ShowHand(players[i], false);
+            Console.WriteLine();
+        }
+        Console.WriteLine($"Det är {participant.Name}s tur:"); // So you can see whose turn it is
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
@@ -71,16 +80,23 @@ public class ConsoleUi
     {
         Console.WriteLine($"{participant.Name}:");
 
-        for (int i = 0; i < participant.Hand.Cards.Count; i++) // Go through all cards in the hand.
+        for (int row = 0; row < 7; row++) // This goes throw all 7 rows(every time that a row is writen go to the next row of the card)
         {
-            if (hideHoleCard && i == 1) // Hide the dealer's second card.
+            for (int i = 0; i < participant.Hand.Cards.Count; i++) // This goes throw all cards in hand
             {
-                Console.WriteLine("Dolt kort");
+                string cardPicture;
+                if (hideHoleCard && i == 1) // If bool is active, hide a card from the dealer
+                {
+                    cardPicture = ShowCard.ShowHideCard();
+                }
+                else
+                {
+                    cardPicture = participant.Hand.Cards[i].ToString(); // This show the cards normally
+                }
+                string[] cardLines = cardPicture.Split('\n'); // This split the card when \n reach 
+                Console.Write(cardLines[row] + " ");          // Print only the current row + space between first row of all cards
             }
-            else
-            {
-                Console.WriteLine(participant.Hand.Cards[i]); // Show the card.
-            }
+            Console.WriteLine(); // This just create a new empty line
         }
         if (!hideHoleCard) // Show the total only when all cards are visible.
         {
@@ -92,6 +108,11 @@ public class ConsoleUi
     public void ShowMessage(string message) //Method that is used by Game.cs to print messages
     {
         Console.WriteLine(message);
+    }
+
+    public void Pause() // Short pause so the user can follow the computer players
+    {
+        Thread.Sleep(1000); // 1000 milliseconds = 1 second
     }
 
     public void ShowOutcome(Outcome outcome)// Prints how the round ended. 
