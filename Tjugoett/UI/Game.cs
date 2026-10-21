@@ -110,7 +110,7 @@ public class Game
         // Prints the player's name,cards and total score
         _ui.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
         // Ask the player to HIT or STAND and return their choice.
-        return _ui.AskMove(participant, _dealer);
+        return _ui.AskMove(participant, _dealer, _players);
     }
 
     
