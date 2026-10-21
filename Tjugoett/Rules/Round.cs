@@ -12,17 +12,28 @@ public class Round
         ConsoleUi = new ConsoleUi();
     }
     // Here we receive a list of players, the deck and the dealer.
-    public List<Outcome> PlayRound(Deck deck, List<Player> players, Dealer dealer)
+    public List<Outcome> PlayRound(Shoes deck, List<Player> players, Dealer dealer)
     {
         // Create an empty list to store the outcome for each player.
         List<Outcome> roundResults = new List<Outcome>();
 
+
         // Give two start cards to ALL players in the list, and to the dealer
         for (int i = 0; i < players.Count; i++)
         {
-            deck.DealCards(players[i]); // Players get two cards
+            for (int j = 0; j < 2; j++)
+            {
+                // Loop twice to deal two cards
+                Card card = deck.DealCard();
+                players[i].Hand.AddCard(card);
+            }
         }
-        deck.DealCards(dealer); // Dealer gets two cards
+        for (int j = 0; j < 2; j++)
+        {
+            // Gives two card to the dealder
+            Card delarCard = deck.DealCard();
+            dealer.Hand.AddCard(delarCard);
+        }
 
         // Player turns - Loop through each player one by one
         for (int i = 0; i < players.Count; i++)
@@ -58,8 +69,10 @@ public class Round
 
                     if (choice == Move.Hit) // The player gets another card
                     {
-                        deck.DealCard(players[i]);
-                        ConsoleUi.ShowMessage($"{players[i].Hand.Cards[^1]}");
+                        // Take a car from the deck and gives that to the player.
+                        Card drawnCard = deck.DealCard();
+                        players[i].Hand.AddCard(drawnCard);
+                        
                     }
                     else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
                     {
@@ -67,13 +80,13 @@ public class Round
                     }
 
                     if (players[i].Hand.Value == 21) // Control the player's value after each card
-                    {
-                        ConsoleUi.ShowMessage("Du har fått Blackjack!!! ");
+                    {    
+                        ConsoleUi.ShowMessage ($"{players[i].Name}"+" har fått 21.");                         
                         break; // The player is bust                     
                     }
                     if (players[i].Hand.Value > 21) // Control the player's value after each card
                     {
-                        ConsoleUi.ShowMessage("Du har blivit tjock!!! ");
+                        ConsoleUi.ShowMessage($"{players[i].Name}"+" har blivit tjock!!! ");
                         break; // The player is bust                     
                     }
                 }
@@ -87,7 +100,11 @@ public class Round
         {
             if (dealer.ShouldHit())
             {
-                deck.DealCard(dealer);
+                // Takes a card from the shoe
+                Card dealCard= deck.DealCard();
+
+                // Gives the card to the dealer manually
+                dealer.Hand.AddCard(dealCard);
             }
             else
             {

@@ -8,7 +8,7 @@ namespace Tjugoett.UI;
 
 public class Game
 {
-    private Deck _deck;
+    private Shoes _deck;
     private List<Player> _players;
     private Dealer _dealer;
     private ConsoleUi _ui;
@@ -16,7 +16,7 @@ public class Game
     private GameStorage _storage;
     public Game()   //This is the contructor for the class Game
     {
-        _deck = new Deck();
+        _deck = new Shoes(6);
         _players = new List<Player>();
         _dealer = new Dealer("Dealer");
         _ui = new ConsoleUi();
@@ -83,7 +83,14 @@ public class Game
         }
         _dealer.Hand.Clear();
         _dealer.HideHoleCard();
-        _deck.CardLeft();       //It will check if there are enough cards for the next round
+
+
+        if (_deck.IsCutCardReached)
+        {
+            _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
+            _deck.ShuffleShoe();
+        }
+    
 
         List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
 
@@ -102,11 +109,31 @@ public class Game
         }
     }
 
-    private Move AskMoveWithDealer(Participant participant) // Player sends itself to this method. It adds the dealer and asks ConsoleUi for Hit or Stand
+    private Move AskMoveWithDealer(Participant participant) 
     {
+        // ----------CARD COUNTING DISPLAY------------
+        // Print the Running Count and True Count
+        _ui.ShowMessage($"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
+        // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
+        _ui.ShowMessage($"[STATUS] {_deck.GetAdvantageIndicator()}\n");
+        
+        //-----------NEW CARD DISPLAY-----------------
+        // Check if the player aready drew a card  this round
+        if (participant.Hand.Cards.Count > 2)
+        {    
+            // Prints the last card drawn using [^1]
+            _ui.ShowMessage($"Ditt nya kort:");
+            _ui.ShowMessage($"{participant.Hand.Cards[^1]}");
+        }
+         
+        //-----------CURRENT HAND DISPLAY-------------
+        // Prints the player's name,cards and total score
+        _ui.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
+        // Ask the player to HIT or STAND and return their choice.
         return _ui.AskMove(participant, _dealer, _players);
     }
 
+    
     private void ShowResults()  //This method will print to user the saved data
     {
         List<string> savedResults = _storage.LoadResults();
