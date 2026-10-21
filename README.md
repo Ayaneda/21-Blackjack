@@ -4,11 +4,11 @@
 
 1. **Program** skapar ett **Game** och kör Run().
 2. **Game** skapar en **Deck** (som byggs och blandas direkt), en **Dealer**, **ConsoleUi**, **Round** och **GameStorage**. Sedan visas menyn via ConsoleUi (ShowMenu()).
-3. **Första gången man väljer "Spela en runda"** frågar Game efter antal spelare och namn (AskPlayerCount(), AskName()) och skapar en **Player** för varje. Varje Player får metoden AskMoveWithDealer inskickad, som frågar ConsoleUi om spelarens drag och visar givarens öppna kort.
-4. **Inför varje runda** töms allas händer, givarens andra kort döljs igen (HideHoleCard()) och Deck kontrollerar att det finns tillräckligt med kort kvar (CardLeft()). Finns det färre än 15 kort byggs och blandas en ny kortlek.
+3. **Första gången man väljer "Spela en runda"** frågar Game efter antal spelare och namn (AskPlayerCount(), AskName()) och skapar en **Player** för varje. Varje Player får metoden AskMoveWithDealer inskickad, som frågar ConsoleUi om spelarens drag. Finns det lediga platser (max 5 spelare totalt) frågar Game hur många datorspelare man vill ha (AskComputerPlayerCount()). Varje **ComputerPlayer** får ett namn, en slumpad strategi (**SimpleStrategy** eller **BasicStrategy**, som båda följer gränssnittet **IPlayerStrategy**) och givaren, så att den kan se givarens öppna kort.
+4. **Inför varje runda** töms allas händer och varje datorspelare får en ny slumpad strategi (SetStrategy()). Givarens andra kort döljs igen (HideHoleCard()) och Deck kontrollerar att det finns tillräckligt med kort kvar (CardLeft()). Finns det färre än 15 kort byggs och blandas en ny kortlek.
 5. **Round** delar ut två **Card** till varje spelare och givaren. Korten hamnar i varje deltagares **Hand**. Givarens andra kort är dolt.
-6. **Spelarnas tur:** Round anropar player.GetMove() för en spelare i taget. **ConsoleUi** visar givarens öppna kort och spelarens hand som kortbilder och frågar Hit eller Stand. Vid Hit ger Round ett nytt kort och visar det, tills spelaren stannar, får 21 eller går över 21. Den som får 21 på de två första korten (naturlig tjugoett) hoppar över sin tur.
-7. **Givarens tur:** **Dealer** vänder sitt dolda kort (RevealHoleCard()) och tar kort enligt regeln (ShouldHit(), under 17) utan att fråga någon.
+6. **Spelarnas tur:** Round anropar player.GetMove() för en spelare i taget. För en mänsklig spelare visar **ConsoleUi** givarens öppna kort och alla spelares händer som kortbilder och frågar Hit eller Stand. För en datorspelare visas först dess startkort, och sedan bestämmer strategin draget (ChooseMove()) utan att någon tillfrågas. Efter en kort paus visas datorns drag. Vid Hit ger Round ett nytt kort och visar det, tills spelaren stannar, får 21 eller går över 21. Den som får 21 på de två första korten (naturlig tjugoett) hoppar över sin tur.
+7. **Givarens tur:** **Dealer** vänder sitt dolda kort (RevealHoleCard()) och tar kort enligt regeln (ShouldHit()) utan att fråga någon. Givaren drar på 16 eller lägre och stannar på 17 eller högre, även mjuk 17.
 8. **Resultat:** Round jämför varje spelares summa från **Hand** med givarens och ger ett **Outcome** (Win, Lose, Push, Blackjack).
 9. **Tillbaka i Game:** allas händer och givarens hand visas. Varje spelares resultat visas med ShowOutcome() och sparas med **GameStorage** (SaveResult()). Sedan visas menyn igen, och nästa runda spelas med samma spelare.
 10. **"Visa tidigare resultat"** läser in dem med LoadResults() och visar dem via ConsoleUi. **"Avsluta"** avslutar loopen i Run().
@@ -61,3 +61,6 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 
 ## Kända brister
 
+###Kvar att göra 21/10
+- GameStorage sparar bara rader som “Namn - Win”. Spelarna läses inte in igen vid nästa start, och ingenstans räknas vinster, förluster och lika ihop per spelare. Det är det största hålet i grunden.
+- Round skriver “Du har fått Blackjack!!!” även när spelaren når 21 på tre kort. Det är bara texten som är fel, inte uträkningen.
