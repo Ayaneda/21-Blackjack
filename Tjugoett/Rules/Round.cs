@@ -7,7 +7,7 @@ namespace Tjugoett.Rules;
 public class Round
 {
     public ConsoleUi ConsoleUi;
-    public  Round()
+    public Round()
     {
         ConsoleUi = new ConsoleUi();
     }
@@ -48,11 +48,24 @@ public class Round
 
             // If the cards are less than 21 you can get another card
             if (players[i].Hand.Value < 21)
-            {   
+            {
+                if (players[i] is ComputerPlayer) // Humans already see their hand in AskMove
+                {
+                    ConsoleUi.ShowHand(players[i], false); // Show the computer player's starting cards
+                }
+
                 // The current player is kept in this loop until they stand or bust
                 while (true)
                 {
                     Move choice = players[i].GetMove(); // Ask the current player for Hit or Stand
+
+                    string moveText = choice == Move.Hit ? "tar kort" : "stannar";
+                    ConsoleUi.ShowMessage($"{players[i].Name} {moveText}"); //Prints the players/computers move
+
+                    if (players[i] is ComputerPlayer)
+                    {
+                        ConsoleUi.Pause();              //give the user time to see what the computer did
+                    }
 
                     if (choice == Move.Hit) // The player gets another card
                     {
@@ -60,7 +73,7 @@ public class Round
                         Card drawnCard = deck.DealCard();
                         players[i].Hand.AddCard(drawnCard);
                         
-                    } 
+                    }
                     else if (choice == Move.Stand) // The player chooses Stand and their loop breaks
                     {
                         break;
@@ -68,12 +81,12 @@ public class Round
 
                     if (players[i].Hand.Value == 21) // Control the player's value after each card
                     {    
-                        ConsoleUi.ShowMessage ("Du har 21");                         
+                        ConsoleUi.ShowMessage ("Du har fått Blackjack!!! ");                         
                         break; // The player is bust                     
                     }
                     if (players[i].Hand.Value > 21) // Control the player's value after each card
-                    {    
-                        ConsoleUi.ShowMessage ("Du har blivit tjock!!! ");                            
+                    {
+                        ConsoleUi.ShowMessage("Du har blivit tjock!!! ");
                         break; // The player is bust                     
                     }
                 }
@@ -84,7 +97,7 @@ public class Round
         dealer.RevealHoleCard(); // Turning the hole card first
 
         while (true)
-        {   
+        {
             if (dealer.ShouldHit())
             {
                 // Takes a card from the shoe
@@ -100,7 +113,7 @@ public class Round
         }
 
         // Decide the outcome for each player and add it to the results list
-        for (int i = 0; i < players.Count; i++) 
+        for (int i = 0; i < players.Count; i++)
         {
             // The player has a natural Blackjack, but the dealer does not.
             if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && !(dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2))
@@ -118,7 +131,7 @@ public class Round
             // Both have a natural Blackjack (21 on two cards)
             else if (players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2 && dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2)
             {
-               roundResults.Add(Outcome.Push);
+                roundResults.Add(Outcome.Push);
             }
             // The dealer has a natural Blackjack (2 cards), but the player has a regular 21 (3+ cards)
             else if (dealer.Hand.Value == 21 && dealer.Hand.Cards.Count == 2 && !(players[i].Hand.Value == 21 && players[i].Hand.Cards.Count == 2))
@@ -141,7 +154,7 @@ public class Round
 
         // Send the final results back to the game loop
         return roundResults;
-   
+
     }
 
 
