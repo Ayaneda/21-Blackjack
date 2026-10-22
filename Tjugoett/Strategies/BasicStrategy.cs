@@ -7,6 +7,8 @@ namespace Tjugoett.Strategies;
 // Double counts as Hit, "Ds" (double, else stand) counts as Stand
 public class BasicStrategy : IPlayerStrategy
 {
+
+    public string Name => "Grundstrategi"; // name shown to the player at the end of the round
     private const Move H = Move.Hit;   //const means that the value can't be changed
     private const Move S = Move.Stand;
 

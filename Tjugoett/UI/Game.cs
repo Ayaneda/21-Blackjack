@@ -231,6 +231,10 @@ public class Game
             Player player = _players[i];
 
             _ui.ShowMessage($"{player.Name}");
+            if (player is ComputerPlayer bot) // only computer players have a strategy
+            {
+                _ui.ShowMessage($"Strategi: {bot.StrategyName}");
+            }
             _ui.ShowOutcome(results[i]); // Shows the player's result.
 
             player.Betting.SettleBet(results[i]); // Pays out based on the result.
