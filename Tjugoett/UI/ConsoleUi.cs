@@ -21,7 +21,7 @@ public class ConsoleUi
 
     public int AskPlayerCount(List<Player> players) // Asks how many players, 1 to 5
     {
-        Console.Write($"Ange antal spelare (1-{5 - players.Count}: ");
+        Console.Write($"Ange antal spelare (1-{5 - players.Count}): ");
         return ReadInt(1, 5 - players.Count);
     }
 
