@@ -56,21 +56,10 @@ public class Game
         {
             // Load the players from the last game.
             List<string> lastPlayers = _storage.LoadSavedPlayers();
-
             if (lastPlayers.Count > 0 && lastPlayers.Count <= 5)
             {
-                _ui.ShowMessage("1. Fortsätt med senaste spelarna");
-                _ui.ShowMessage("2. Välj andra spelare");
-
-                string answer = _ui.GetInput();
-
-                while (answer != "1" && answer != "2") // Ask again until the answer is 1 or 2.
-                {
-                    _ui.ShowMessage("Skriv 1 eller 2:");
-                    answer = _ui.GetInput();
-                }
-
-                if (answer == "1")
+                int answer = _ui.LoadLastPlayers();
+                if (answer == 1)
                 {
                     foreach (string name in lastPlayers)
                     {
@@ -83,103 +72,88 @@ public class Game
                 }
             }
             List<string> savedNames = _storage.LoadPlayerNames();  // Load previously saved player names.
-            if (_players.Count == 0) // Only ask for new players if none were restored.
+            if (savedNames.Count > 0)  // Check if any previous players exist.
             {
+                _ui.ShowMessage("Tidigare spelare:");// Show the names of previously saved players.
 
-                if (savedNames.Count > 0)  // Check if any previous players exist.
+                foreach (string name in savedNames)
                 {
-                    _ui.ShowMessage("Tidigare spelare:");// Show the names of previously saved players.
-
-                    foreach (string name in savedNames)
-                    {
-                        _ui.ShowMessage(name);
-                    }
+                    _ui.ShowMessage(name);
                 }
-                int count = _ui.AskPlayerCount();
-                for (int i = 0; i < count; i++)
+            }
+            int count = _ui.AskPlayerCount();
+            for (int i = 0; i < count; i++)
+            {
+            // Let the user choose between a saved player and a new player.
+                string name;
+
+                if (savedNames.Count > 0) // Check if saved players exist.
                 {
-                    // Let the user choose between a saved player and a new player.
-                    string name;
-
-                    if (savedNames.Count > 0) // Check if saved players exist.
+                    int choice = _ui.CheckSavedPlayers();
+                    if (choice == 1) // Select a previously saved player.
                     {
-                        _ui.ShowMessage("1. Välj tidigare spelare");
-                        _ui.ShowMessage("2. Ange nytt spelarnamn");
+                        name = _ui.AskName();
 
-                        string choice = _ui.GetInput(); // Read the user's choice.
-
-                        while (choice != "1" && choice != "2") // Ask again until the choice is 1 or 2.
+                        while (!savedNames.Contains(name)) // Check if the player exists.
                         {
-                            _ui.ShowMessage("Skriv 1 eller 2:");
-                            choice = _ui.GetInput();
-                        }
-
-                        if (choice == "1") // Select a previously saved player.
-                        {
-                            _ui.ShowMessage("Ange namnet på en tidigare spelare:");
-                            name = _ui.GetInput();
-
-                            while (!savedNames.Contains(name)) // Check if the player exists.
-                            {
-                                _ui.ShowMessage("Spelaren finns inte. Försök igen:");
-                                name = _ui.GetInput();
-                            }
-                        }
-                        else // Create a new player.
-                        {
+                            _ui.ShowMessage("Spelaren finns inte. Försök igen:");
                             name = _ui.AskName();
                         }
                     }
-                    else // Ask for a name if no players are saved.
+                    else // Create a new player.
                     {
                         name = _ui.AskName();
                     }
-                    // Prevent duplicate player names in the same game.
-                    while (_players.Exists(p => p.Name == name))
-                    {
-                        _ui.ShowMessage("Namnet används redan. Ange ett annat namn:");
-                        name = _ui.AskName();
-                    }
-                    if (savedNames.Contains(name)) // Check if the player has played before.
-                    {
-                        _ui.ShowMessage($"Välkommen tillbaka, {name}!");
-                    }
-
-                    decimal chips = _storage.LoadChips(name); // Loads saved chips.
-
-                    _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
                 }
-                int freeSeats = 5 - count; //  Max 5 players in total
-
-                if (freeSeats > 0) //Only ask if there is room left
+                else // Ask for a name if no players are saved.
                 {
-                    int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
-
-                    for (int i = 0; i < computerCount; i++)
-                    {
-                        // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
-                        IPlayerStrategy strategy = Random.Shared.Next(2) == 0
-                            ? new SimpleStrategy()
-                            : new BasicStrategy();
-
-                        _players.Add(
-                            new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
-                    }
+                    name = _ui.AskName();
                 }
-                // Save the human players for the next game.
-                List<string> playerNames = new();
-
-                foreach (Player player in _players)
+                // Prevent duplicate player names in the same game.
+                while (_players.Exists(p => p.Name == name))
                 {
-                    if (player is not ComputerPlayer)
-                    {
-                        playerNames.Add(player.Name);
-                    }
+                    _ui.ShowMessage("Namnet används redan. Ange ett annat namn:");
+                    name = _ui.AskName();
                 }
+                if (savedNames.Contains(name)) // Check if the player has played before.
+                {
+                    _ui.ShowMessage($"Välkommen tillbaka, {name}!");
+                }
+                decimal chips = _storage.LoadChips(name); // Loads saved chips.
 
-                _storage.SavePlayers(playerNames); // Saves the names in players.txt.
+                _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
             }
+            int freeSeats = 5 - count; //  Max 5 players in total
+
+            if (freeSeats > 0) //Only ask if there is room left
+            {
+                int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
+
+                for (int i = 0; i < computerCount; i++)
+                {
+                    // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
+                    IPlayerStrategy strategy = Random.Shared.Next(2) == 0
+                        ? new SimpleStrategy()
+                        : new BasicStrategy();
+
+                    _players.Add(
+                        new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                }
+            }
+            // Save the human players for the next game.
+            List<string> playerNames = new();
+
+            foreach (Player player in _players)
+            {
+                if (player is not ComputerPlayer)
+                {
+                    playerNames.Add(player.Name);
+                }
+            }
+
+            _storage.SavePlayers(playerNames); // Saves the names in players.txt.
         }
+        
 
         _players.RemoveAll(player => player.Betting.Chips == 0); // Removes players without chips.
 
