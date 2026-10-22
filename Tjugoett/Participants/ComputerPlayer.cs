@@ -9,7 +9,7 @@ public class ComputerPlayer : Player
     private IPlayerStrategy _strategy; // the strategy the computer player is using right now
     private Dealer _dealer; //the dealer
 
-
+    public string StrategyName => _strategy.Name; // lets Game read which strategy is used, without exposing the strategy itself
 
 
     public ComputerPlayer(string name, IPlayerStrategy strategy, Dealer dealer) : base(name) // Constructor: name, strategy and dealer

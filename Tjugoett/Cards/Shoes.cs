@@ -118,7 +118,7 @@ public class Shoes
         if (truecount >= 3)return "Money money money! (Många höga kort kvar) ";
         if (truecount > 0)return "Helt ok! (Våga satsa) ";
         if (truecount == 0)return "Ja ! Ta en chans! ";
-        return "Do yuo feel LUCKY, PUNK! (Många småkort kvar)";
+        return "Do you feel LUCKY, PUNK! (Många småkort kvar)";
     }
     
     public int CardLeft()
