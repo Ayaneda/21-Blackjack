@@ -52,13 +52,63 @@ public class Game
     {
         if (_players.Count == 0)   //The first time will ask for players because there is not player yet
         {
+            List<string> savedNames = _storage.LoadPlayerNames();  // Load previously saved player names.
+
+            if (savedNames.Count > 0)  // Check if any previous players exist.
+            {
+                _ui.ShowMessage("Tidigare spelare:");// Show the names of previously saved players.
+
+                foreach (string name in savedNames)
+                {
+                    _ui.ShowMessage(name);
+                }
+            }
             int count = _ui.AskPlayerCount();
             for (int i = 0; i < count; i++)
             {
-                string name = _ui.AskName();
+                // Let the user choose between a saved player and a new player.
+                string name;
+
+                if (savedNames.Count > 0) // Check if saved players exist.
+                {
+                    _ui.ShowMessage("1. Välj tidigare spelare");
+                    _ui.ShowMessage("2. Ange nytt spelarnamn");
+
+                    string choice = Console.ReadLine() ?? ""; // Read the user's choice.
+
+                    if (choice == "1") // Select a previously saved player.
+                    {
+                        _ui.ShowMessage("Ange namnet på en tidigare spelare:");
+                        name = Console.ReadLine() ?? "";
+
+                        while (!savedNames.Contains(name)) // Check if the player exists.
+                        {
+                            _ui.ShowMessage("Spelaren finns inte. Försök igen:");
+                            name = Console.ReadLine() ?? "";
+                        }
+                    }
+                    else // Create a new player.
+                    {
+                        name = _ui.AskName();
+                    }
+                }
+                else // Ask for a name if no players are saved.
+                {
+                    name = _ui.AskName();
+                }
+                // Prevent duplicate player names in the same game.
+                while (_players.Exists(p => p.Name == name))
+                {
+                    _ui.ShowMessage("Namnet används redan. Ange ett annat namn:");
+                    name = _ui.AskName();
+                }
+                if (savedNames.Contains(name)) // Check if the player has played before.
+                {
+                    _ui.ShowMessage($"Välkommen tillbaka, {name}!");
+                }
+
                 _players.Add(new Player(name, AskMoveWithDealer));
             }
-
             int freeSeats = 5 - count; // Max 5 players in total
             if (freeSeats > 0)         // Only ask if there is room left
             {
@@ -90,7 +140,7 @@ public class Game
             _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
             _deck.ShuffleShoe();
         }
-    
+
 
         List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
 
@@ -109,23 +159,23 @@ public class Game
         }
     }
 
-    private Move AskMoveWithDealer(Participant participant) 
+    private Move AskMoveWithDealer(Participant participant)
     {
         // ----------CARD COUNTING DISPLAY------------
         // Print the Running Count and True Count
         _ui.ShowMessage($"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
         // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
         _ui.ShowMessage($"[STATUS] {_deck.GetAdvantageIndicator()}\n");
-        
+
         //-----------NEW CARD DISPLAY-----------------
         // Check if the player aready drew a card  this round
         if (participant.Hand.Cards.Count > 2)
-        {    
+        {
             // Prints the last card drawn using [^1]
             _ui.ShowMessage($"Ditt nya kort:");
             _ui.ShowMessage($"{participant.Hand.Cards[^1]}");
         }
-         
+
         //-----------CURRENT HAND DISPLAY-------------
         // Prints the player's name,cards and total score
         _ui.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
@@ -133,7 +183,7 @@ public class Game
         return _ui.AskMove(participant, _dealer, _players);
     }
 
-    
+
     private void ShowResults()  //This method will print to user the saved data
     {
         List<string> savedResults = _storage.LoadResults();
@@ -148,7 +198,18 @@ public class Game
             {
                 _ui.ShowMessage(savedResults[i]);
             }
+
+            Dictionary<string, int[]> stats = _storage.LoadPlayerStats();  // Load the total wins, losses and draws for each player.
+
+
+            _ui.ShowMessage("\n--- Spelarstatistik ---"); // Show the statistics heading.
+
+            foreach (var player in stats)// Go through each player and display their statistics.
+            {
+                _ui.ShowMessage($"{player.Key}: Vinster: {player.Value[0]}, Förluster: {player.Value[1]}, Oavgjorda: {player.Value[2]}");
+            }
         }
+
     }
 
 }
