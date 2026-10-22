@@ -52,110 +52,145 @@ public class Game
     {
         if (_players.Count == 0)   //The first time will ask for players because there is not player yet
         {
-            List<string> savedNames = _storage.LoadPlayerNames();  // Load previously saved player names.
+            // Load the players from the last game.
+            List<string> lastPlayers = _storage.LoadSavedPlayers();
 
-            if (savedNames.Count > 0)  // Check if any previous players exist.
+            if (lastPlayers.Count > 0 && lastPlayers.Count <= 5)
             {
-                _ui.ShowMessage("Tidigare spelare:");// Show the names of previously saved players.
+                _ui.ShowMessage("1. Fortsätt med senaste spelarna");
+                _ui.ShowMessage("2. Välj andra spelare");
 
-                foreach (string name in savedNames)
+                string answer = Console.ReadLine() ?? "";
+
+                if (answer == "1")
                 {
-                    _ui.ShowMessage(name);
+                    foreach (string name in lastPlayers)
+                    {
+                        _players.Add(new Player(name, AskMoveWithDealer));
+                    }
+
+                    _ui.ShowMessage("Tidigare spelare har återställts!");
                 }
             }
-            int count = _ui.AskPlayerCount();
-            for (int i = 0; i < count; i++)
+            List<string> savedNames = _storage.LoadPlayerNames();  // Load previously saved player names.
+            if (_players.Count == 0) // Only ask for new players if none were restored.
             {
-                // Let the user choose between a saved player and a new player.
-                string name;
 
-                if (savedNames.Count > 0) // Check if saved players exist.
+                if (savedNames.Count > 0)  // Check if any previous players exist.
                 {
-                    _ui.ShowMessage("1. Välj tidigare spelare");
-                    _ui.ShowMessage("2. Ange nytt spelarnamn");
+                    _ui.ShowMessage("Tidigare spelare:");// Show the names of previously saved players.
 
-                    string choice = Console.ReadLine() ?? ""; // Read the user's choice.
-
-                    if (choice == "1") // Select a previously saved player.
+                    foreach (string name in savedNames)
                     {
-                        _ui.ShowMessage("Ange namnet på en tidigare spelare:");
-                        name = Console.ReadLine() ?? "";
+                        _ui.ShowMessage(name);
+                    }
+                }
+                int count = _ui.AskPlayerCount();
+                for (int i = 0; i < count; i++)
+                {
+                    // Let the user choose between a saved player and a new player.
+                    string name;
 
-                        while (!savedNames.Contains(name)) // Check if the player exists.
+                    if (savedNames.Count > 0) // Check if saved players exist.
+                    {
+                        _ui.ShowMessage("1. Välj tidigare spelare");
+                        _ui.ShowMessage("2. Ange nytt spelarnamn");
+
+                        string choice = Console.ReadLine() ?? ""; // Read the user's choice.
+
+                        if (choice == "1") // Select a previously saved player.
                         {
-                            _ui.ShowMessage("Spelaren finns inte. Försök igen:");
+                            _ui.ShowMessage("Ange namnet på en tidigare spelare:");
                             name = Console.ReadLine() ?? "";
+
+                            while (!savedNames.Contains(name)) // Check if the player exists.
+                            {
+                                _ui.ShowMessage("Spelaren finns inte. Försök igen:");
+                                name = Console.ReadLine() ?? "";
+                            }
+                        }
+                        else // Create a new player.
+                        {
+                            name = _ui.AskName();
                         }
                     }
-                    else // Create a new player.
+                    else // Ask for a name if no players are saved.
                     {
                         name = _ui.AskName();
                     }
+                    // Prevent duplicate player names in the same game.
+                    while (_players.Exists(p => p.Name == name))
+                    {
+                        _ui.ShowMessage("Namnet används redan. Ange ett annat namn:");
+                        name = _ui.AskName();
+                    }
+                    if (savedNames.Contains(name)) // Check if the player has played before.
+                    {
+                        _ui.ShowMessage($"Välkommen tillbaka, {name}!");
+                    }
+
+                    _players.Add(new Player(name, AskMoveWithDealer));
                 }
-                else // Ask for a name if no players are saved.
+                int freeSeats = 5 - count; // Max 5 players in total
+                if (freeSeats > 0)         // Only ask if there is room left
                 {
-                    name = _ui.AskName();
+                    int computerCount = _ui.AskComputerPlayerCount(freeSeats); //Number of free seats is shown in the question to the player
+                    for (int i = 0; i < computerCount; i++)
+                    {
+                        // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
+                        IPlayerStrategy strategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                        _players.Add(new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                    }
                 }
-                // Prevent duplicate player names in the same game.
-                while (_players.Exists(p => p.Name == name))
+                // Save the human players for the next game.
+                List<string> playerNames = new();
+
+                foreach (Player player in _players)
                 {
-                    _ui.ShowMessage("Namnet används redan. Ange ett annat namn:");
-                    name = _ui.AskName();
-                }
-                if (savedNames.Contains(name)) // Check if the player has played before.
-                {
-                    _ui.ShowMessage($"Välkommen tillbaka, {name}!");
+                    if (player is not ComputerPlayer)
+                    {
+                        playerNames.Add(player.Name);
+                    }
                 }
 
-                _players.Add(new Player(name, AskMoveWithDealer));
+                _storage.SavePlayers(playerNames); // Saves the names in players.txt.
             }
-            int freeSeats = 5 - count; // Max 5 players in total
-            if (freeSeats > 0)         // Only ask if there is room left
+            for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
             {
-                int computerCount = _ui.AskComputerPlayerCount(freeSeats); //Number of free seats is shown in the question to the player
-                for (int i = 0; i < computerCount; i++)
+                _players[i].Hand.Clear();
+
+                if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
                 {
-                    // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
-                    IPlayerStrategy strategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
-                    _players.Add(new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                    IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                    bot.SetStrategy(newStrategy); // Swap strategy while the game is running
                 }
             }
-        }
-        for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
-        {
-            _players[i].Hand.Clear();
+            _dealer.Hand.Clear();
+            _dealer.HideHoleCard();
 
-            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
+
+            if (_deck.IsCutCardReached)
             {
-                IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
-                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
+                _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
+                _deck.ShuffleShoe();
             }
-        }
-        _dealer.Hand.Clear();
-        _dealer.HideHoleCard();
 
 
-        if (_deck.IsCutCardReached)
-        {
-            _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
-            _deck.ShuffleShoe();
-        }
+            List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
 
+            for (int i = 0; i < _players.Count; i++)     //It shows everyone hands before leaving the round
+            {
+                _ui.ShowHand(_players[i], false);
+            }
 
-        List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
+            _ui.ShowHand(_dealer, false);
 
-        for (int i = 0; i < _players.Count; i++)     //It shows everyone hands before leaving the round
-        {
-            _ui.ShowHand(_players[i], false);
-        }
-
-        _ui.ShowHand(_dealer, false);
-
-        for (int i = 0; i < _players.Count; i++)   //Shows the outcome of every player.
-        {
-            _ui.ShowMessage($"{_players[i].Name}");
-            _ui.ShowOutcome(results[i]);
-            _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
+            for (int i = 0; i < _players.Count; i++)   //Shows the outcome of every player.
+            {
+                _ui.ShowMessage($"{_players[i].Name}");
+                _ui.ShowOutcome(results[i]);
+                _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
+            }
         }
     }
 

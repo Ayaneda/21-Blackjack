@@ -6,6 +6,7 @@ public class GameStorage
 {
     private readonly string _filePath = "results.txt"; // File where player names and game results are stored.
 
+    private readonly string _playersFilePath = "players.txt"; // File for saving the last active players.
     public void SaveResult(string playerName, Outcome outcome) // Save a plyyer's result without deleting previous results.
     {
         string result = $"{playerName} - {outcome}";
@@ -60,5 +61,18 @@ public class GameStorage
         }
 
         return names; // Returns the player names.
+    }
+    public void SavePlayers(List<string> names) // Saves the last active players.
+    {
+        File.WriteAllLines(_playersFilePath, names); // Saves each name on a separate line.
+    }
+    public List<string> LoadSavedPlayers() // Loads the last active players.
+    {
+        if (!File.Exists(_playersFilePath)) // Check if the file exists.
+        {
+            return new List<string>();
+        }
+
+        return File.ReadAllLines(_playersFilePath).ToList(); // Read saved player names.
     }
 }
