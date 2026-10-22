@@ -15,7 +15,7 @@ public class ConsoleUi
         Console.WriteLine("2. Ladda sista spelet");
         Console.WriteLine("3. Lägga till spelare");
         Console.WriteLine("4. Lämna spelet");
-        Console.WriteLine("5. Visa tidigare resultat");
+        Console.WriteLine("5. Visa statistik");
         Console.WriteLine("6. Avsluta");
         Console.Write("Välj: ");
         return ReadInt(1, 6);

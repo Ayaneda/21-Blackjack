@@ -206,11 +206,6 @@ public class Game
         }
         else    //just show to user all saved data as a message
         {
-            for (int i = 0; i < savedResults.Count; i++)
-            {
-                ConsoleUi.ShowMessage(savedResults[i]);
-            }
-
             Dictionary<string, int[]> stats = _storage.LoadPlayerStats();  // Load the total wins, losses and draws for each player.
 
 
