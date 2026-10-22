@@ -34,7 +34,25 @@ public class ConsoleUi
         Console.Write("Namn på spelare: ");
         return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
     }
+    public decimal AskBet(Player player) // Asks how many chips the player wants to bet.
+    {
+        Console.WriteLine();
+        Console.WriteLine($"{player.Name} har {player.Betting.Chips} marker.");
+        Console.Write("Hur mycket vill du satsa? ");
 
+        while (true) // Keeps asking until the bet is valid.
+        {
+            string input = Console.ReadLine() ?? "";
+
+            if (decimal.TryParse(input, out decimal amount) &&
+                amount > 0 && amount <= player.Betting.Chips)
+            {
+                return amount; // Returns the valid bet.
+            }
+
+            Console.Write("Ogiltig satsning. Försök igen: ");
+        }
+    }
     public Move AskMove(Participant participant, Dealer dealer, List<Player> players) //Shows the dealer's open card and all players' hands, then asks for hit or stand
     {
         ShowHand(dealer, dealer.HoleCardHidden);
