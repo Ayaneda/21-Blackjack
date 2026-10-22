@@ -53,7 +53,7 @@ public class ConsoleUi
             Console.Write("Ogiltig satsning. Försök igen: ");
         }
     }
-    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) // Shows all players' hands and asks for Hit or Stand.
+    public Move AskMove(Participant participant, Dealer dealer, List<Player> players) //Shows the dealer's open card and all players' hands, then asks for hit or stand
     {
         ShowHand(dealer, dealer.HoleCardHidden);
         Console.WriteLine();

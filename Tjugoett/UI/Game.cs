@@ -16,7 +16,7 @@ public class Game
     private Round _round;
     private GameStorage _storage;
 
-    public Game() // Constructor for the Game class.
+    public Game() // This is the constructor for the class Game
     {
         _deck = new Shoes(6); // Creates a shoe with six decks.
         _players = new List<Player>();
@@ -26,9 +26,9 @@ public class Game
         _storage = new GameStorage();
     }
 
-    public void Run() // Runs the main game menu.
+    public void Run() // this Will run the game
     {
-        bool isRunning = true;
+        bool isRunning = true; // a bool to stop the game when is change
 
         while (isRunning)
         {
@@ -37,15 +37,15 @@ public class Game
             switch (choice)
             {
                 case 1:
-                    PlayRound(); // Starts a game round.
+                    PlayRound(); // This will run the method for
                     break;
 
                 case 2:
-                    ShowResults(); // Shows saved results.
+                    ShowResults(); // Show all save data 
                     break;
 
                 case 3:
-                    isRunning = false; // Exits the game.
+                    isRunning = false;
                     break;
             }
         }
@@ -53,7 +53,7 @@ public class Game
 
     private void PlayRound()
     {
-        if (_players.Count == 0) // Creates players when the table is empty.
+        if (_players.Count == 0) // The first time will ask for players because there is not player yet
         {
             int count = _ui.AskPlayerCount();
 
@@ -65,21 +65,21 @@ public class Game
                 _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
             }
 
-            int freeSeats = 5 - count; // Calculates remaining seats.
+            int freeSeats = 5 - count; //  Max 5 players in total
 
-            if (freeSeats > 0)
+            if (freeSeats > 0) //Only ask if there is room left
             {
-                int computerCount = _ui.AskComputerPlayerCount(freeSeats);
+                int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
 
                 for (int i = 0; i < computerCount; i++)
                 {
+                    // Random.Shared.Next(2) gives 0 or 1 to pick one of the two strategies
                     IPlayerStrategy strategy = Random.Shared.Next(2) == 0
                         ? new SimpleStrategy()
                         : new BasicStrategy();
 
                     _players.Add(
-                        new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)
-                    ); // Adds a computer player.
+                        new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
                 }
             }
         }
@@ -118,17 +118,17 @@ public class Game
             }
         }
 
-        for (int i = 0; i < _players.Count; i++) // Clears hands before a new round.
+        for (int i = 0; i < _players.Count; i++) //Need to clean all hands before starting the next round
         {
             _players[i].Hand.Clear();
 
-            if (_players[i] is ComputerPlayer bot) // Updates computer player strategies.
+            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
             {
                 IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0
                     ? new SimpleStrategy()
                     : new BasicStrategy();
 
-                bot.SetStrategy(newStrategy); // Changes the computer player's strategy.
+                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
             }
         }
 
@@ -148,14 +148,14 @@ public class Game
             _deck, _players, _dealer
         ); // Plays the round and returns the results.
 
-        for (int i = 0; i < _players.Count; i++) // Shows every player's final hand.
+        for (int i = 0; i < _players.Count; i++)    //It shows everyone hands before leaving the round
         {
             _ui.ShowHand(_players[i], false);
         }
 
         _ui.ShowHand(_dealer, false); // Shows all dealer cards.
 
-        for (int i = 0; i < _players.Count; i++) // Handles results and payouts.
+        for (int i = 0; i < _players.Count; i++)  //Shows the outcome of every player.
         {
             Player player = _players[i];
 
@@ -173,10 +173,7 @@ public class Game
                 $"Marker kvar: {player.Betting.Chips}"
             );
 
-            _storage.SaveResult(
-                player.Name,
-                results[i]
-            ); // Saves the game result.
+            _storage.SaveResult(player.Name, results[i]);  //It will save all data from every player in the end of the round
         }
 
         for (int i = _players.Count - 1; i >= 0; i--) // Removes players with no chips left.
@@ -195,29 +192,27 @@ public class Game
     private Move AskMoveWithDealer(Participant participant)
     {
         // ---------- CARD COUNTING DISPLAY ----------
-
+        // Print the Running Count and True Count
         _ui.ShowMessage(
-            $"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}"
-        ); // Shows the running count and true count.
-
+            $"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
+        // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
         _ui.ShowMessage(
             $"[STATUS] {_deck.GetAdvantageIndicator()}\n"
         ); // Shows the card counting status.
 
         // ---------- NEW CARD DISPLAY ----------
-
-        if (participant.Hand.Cards.Count > 2) // Checks if the player has drawn an additional card.
+        // Check if the player aready drew a card  this round
+        if (participant.Hand.Cards.Count > 2)
         {
+            // Prints the last card drawn using [^1]
             _ui.ShowMessage("Ditt nya kort:");
-            _ui.ShowMessage($"{participant.Hand.Cards[^1]}"); // Shows the most recently drawn card.
+            _ui.ShowMessage($"{participant.Hand.Cards[^1]}");
         }
 
         // ---------- CURRENT HAND DISPLAY ----------
-
-        _ui.ShowMessage(
-            $"{participant.Name}s hand (Totalt: {participant.Hand.Value})"
-        ); // Shows the player's name and current score.
-
+        // Prints the player's name,cards and total score
+        _ui.ShowMessage($"{participant.Name}s hand (Totalt: {participant.Hand.Value})");
+        // Ask the player to HIT or STAND and return their choice.
         return _ui.AskMove(
             participant,
             _dealer,
@@ -225,19 +220,19 @@ public class Game
         ); // Returns Hit or Stand.
     }
 
-    private void ShowResults() // Displays previously saved results.
+    private void ShowResults() //This method will print to user the saved data
     {
         List<string> savedResults = _storage.LoadResults();
 
-        if (savedResults.Count == 0)
+        if (savedResults.Count == 0)  //If there isn't any data yet, send a feedback
         {
             _ui.ShowMessage("Inga resultat sparade ännu.");
         }
-        else
+        else    //just show to user all saved data as a message
         {
             for (int i = 0; i < savedResults.Count; i++)
             {
-                _ui.ShowMessage(savedResults[i]); // Prints each saved result.
+                _ui.ShowMessage(savedResults[i]);
             }
         }
     }
