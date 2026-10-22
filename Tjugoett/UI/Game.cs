@@ -41,7 +41,7 @@ public class Game
                     break;
 
                 case 2:
-                    LoadLastGame();    //This will add player between rounds.
+                    LoadLastGame();    //Load last game
                     break;
                 case 3:
                     AddPlayers();   //Add players
