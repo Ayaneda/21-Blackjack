@@ -173,7 +173,11 @@ public class Game
     }
     private void RemovePlayer()
     {
-        Player playerToRemove = _ui.AskForName(_players);
+        foreach(Player player in _players)
+        {
+            ConsoleUi.ShowMessage($"{player}");
+        }
+        Player playerToRemove = _ui.AskNameToRemove(_players);
         _players.Remove(playerToRemove);
     }
 

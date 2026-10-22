@@ -95,7 +95,7 @@ public class ConsoleUi
         }
 
     }
-    public Player AskForName(List<Player> players)
+    public Player AskNameToRemove(List<Player> players)
     {
         while (true)
         {
