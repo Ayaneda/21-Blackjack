@@ -12,7 +12,7 @@ public class ConsoleUi
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
         Console.WriteLine("1. Spela en runda");
-        Console.WriteLine("2. Ladda last spelet");
+        Console.WriteLine("2. Ladda sista spelet");
         Console.WriteLine("3. Lägga till spelare");
         Console.WriteLine("4. Lämna spelet");
         Console.WriteLine("5. Visa tidigare resultat");
