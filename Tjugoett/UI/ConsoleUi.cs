@@ -95,6 +95,25 @@ public class ConsoleUi
         }
 
     }
+    public Player AskForName(List<Player> players)
+    {
+        while (true)
+        {
+            Console.Write("Vilken spelare vill lämna spelet?: ");
+            string name = (Console.ReadLine() ?? "").Trim();
+            for (int i = 0; i < players.Count; i++)
+            {
+                if(players[i].Name == name)
+                {
+                    return players[i];
+                }
+            }
+            
+            Console.WriteLine("Det finns ingen spelare med det namnet");
+        
+        }
+        
+    }
 
     public static void ShowMessage(string message) //Method that is used by Game.cs to print messages
     {

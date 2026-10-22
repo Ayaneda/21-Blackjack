@@ -41,7 +41,7 @@ public class Game
                     AddPlayers();    //This will add player between rounds.
                     break;
                 case 3:
-                    
+                    RemovePlayer();   //Remove a player
                     break;
                 case 4:
                     ShowResults();   //Show all save data 
@@ -164,6 +164,11 @@ public class Game
         {
             ConsoleUi.ShowMessage("Det finns inga lediga platser.");
         }
+    }
+    private void RemovePlayer()
+    {
+        Player playerToRemove = _ui.AskForName(_players);
+        _players.Remove(playerToRemove);
     }
 
 }
