@@ -1,22 +1,24 @@
 using Tjugoett.Participants;
 using Tjugoett.Rules;
 using Tjugoett.Cards;
+using System.Formats.Asn1;
 
 namespace Tjugoett.UI;
 
 public class ConsoleUi
 {
-    public int ShowMenu() // Shows the menu and reads the choice with ReadInt (below)
+    public int ShowMenu() // Shows the menu and reads the choice
     {
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
         Console.WriteLine("1. Spela en runda");
-        Console.WriteLine("2. Lägga till spelare");
-        Console.WriteLine("3. Lämna spelet");
-        Console.WriteLine("4. Visa tidigare resultat");
-        Console.WriteLine("5. Avsluta");
+        Console.WriteLine("2. Ladda last spelet");
+        Console.WriteLine("3. Lägga till spelare");
+        Console.WriteLine("4. Lämna spelet");
+        Console.WriteLine("5. Visa tidigare resultat");
+        Console.WriteLine("6. Avsluta");
         Console.Write("Välj: ");
-        return ReadInt(1, 5);
+        return ReadInt(1, 6);
     }
 
     public int AskPlayerCount(List<Player> players) // Asks how many players, 1 to 5
@@ -30,6 +32,23 @@ public class ConsoleUi
         
         Console.WriteLine("Vilket typ av spelare: (1. Människa /2. Dator)");
         return ReadInt(1,2);
+    }
+    public int LoadLastPlayers()
+    {
+        Console.WriteLine("1. Fortsätt med senaste spelarna");
+        Console.WriteLine("2. Välj andra spelare");
+        return ReadInt(1,2);
+    }
+    public int CheckSavedPlayers()
+    {
+        ShowMessage("1. Välj tidigare spelare");
+        ShowMessage("2. Ange nytt spelarnamn");
+        return ReadInt(1,2);
+    }
+    public int AskPlayerCount() // Asks how many players, 1 to 5
+    {
+        Console.Write("Ange antal spelare (1-5): ");
+        return ReadInt(1,5);
     }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
@@ -75,7 +94,7 @@ public class ConsoleUi
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
-        int choice = ReadInt(1, 2);
+        int choice = ReadInt(1,2);
 
         if (choice == 1)
         {
@@ -167,7 +186,6 @@ public class ConsoleUi
         }
 
     }
-
     private int ReadInt(int min, int max) // Reads a number between min and max, asks again if invalid. Is used in ShowMenu and AskPlayerCount
     {
         while (true)
