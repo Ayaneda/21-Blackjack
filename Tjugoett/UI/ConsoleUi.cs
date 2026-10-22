@@ -11,16 +11,25 @@ public class ConsoleUi
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
         Console.WriteLine("1. Spela en runda");
-        Console.WriteLine("2. Visa tidigare resultat");
-        Console.WriteLine("3. Avsluta");
+        Console.WriteLine("2. Lägga till spelare");
+        Console.WriteLine("3. Lämna spelet.");
+        Console.WriteLine("4. Visa tidigare resultat");
+        Console.WriteLine("5. Avsluta");
         Console.Write("Välj: ");
-        return ReadInt(1, 3);
+        return ReadInt(1, 5);
     }
 
-    public int AskPlayerCount() // Asks how many players, 1 to 5
+    public int AskPlayerCount(List<Player> players) // Asks how many players, 1 to 5
     {
-        Console.Write("Ange antal spelare (1-5): ");
-        return ReadInt(1, 5);
+        Console.Write($"Ange antal spelare (1-{5 - players.Count}: ");
+        return ReadInt(1, 5 - players.Count);
+    }
+
+    public int AskTypeOfPlayer()
+    {
+        
+        Console.WriteLine("Vilket typ av spelare: (1. Spelare /2. Datorspelare)");
+        return ReadInt(1,2);
     }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
@@ -58,7 +67,7 @@ public class ConsoleUi
     }
 
 
-    public void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
+    public static void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
     {
         Console.WriteLine($"{participant.Name}:");
 
@@ -87,12 +96,12 @@ public class ConsoleUi
 
     }
 
-    public void ShowMessage(string message) //Method that is used by Game.cs to print messages
+    public static void ShowMessage(string message) //Method that is used by Game.cs to print messages
     {
         Console.WriteLine(message);
     }
 
-    public void Pause() // Short pause so the user can follow the computer players
+    public static void Pause() // Short pause so the user can follow the computer players
     {
         Thread.Sleep(1000); // 1000 milliseconds = 1 second
     }

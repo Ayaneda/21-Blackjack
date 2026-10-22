@@ -38,9 +38,15 @@ public class Game
                     PlayRound();    //This will run the method for
                     break;
                 case 2:
-                    ShowResults();   //Show all save data 
+                    AddPlayers();    //This will add player between rounds.
                     break;
                 case 3:
+                    
+                    break;
+                case 4:
+                    ShowResults();   //Show all save data 
+                    break;
+                case 5:
                     isRunning = false;
                     break;
 
@@ -50,9 +56,92 @@ public class Game
     }
     private void PlayRound()
     {
-        if (_players.Count == 0)   //The first time will ask for players because there is not player yet
+        for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
         {
-            int count = _ui.AskPlayerCount();
+            _players[i].Hand.Clear();
+
+            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
+            {
+                IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
+                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
+            }
+        }
+        _dealer.Hand.Clear();
+        _dealer.HideHoleCard();
+
+
+        if (_deck.IsCutCardReached)
+        {
+            ConsoleUi.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
+            _deck.ShuffleShoe();
+        }
+    
+
+        List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
+
+        for (int i = 0; i < _players.Count; i++)     //It shows everyone hands before leaving the round
+        {
+            ConsoleUi.ShowHand(_players[i], false);
+        }
+
+        ConsoleUi.ShowHand(_dealer, false);
+
+        for (int i = 0; i < _players.Count; i++)   //Shows the outcome of every player.
+        {
+            ConsoleUi.ShowMessage($"{_players[i].Name}");
+            _ui.ShowOutcome(results[i]);
+            _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
+        }
+    }
+
+    private Move AskMoveWithDealer(Participant participant) 
+    {
+        // ----------CARD COUNTING DISPLAY------------
+        // Print the Running Count and True Count
+        ConsoleUi.ShowMessage($"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
+        // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
+        ConsoleUi.ShowMessage($"[STATUS] {_deck.GetAdvantageIndicator()}\n");
+        
+        //-----------NEW CARD DISPLAY-----------------
+        // Check if the player aready drew a card  this round
+        if (participant.Hand.Cards.Count > 2)
+        {    
+            // Prints the last card drawn using [^1]
+            ConsoleUi.ShowMessage($"Ditt nya kort:");
+            ConsoleUi.ShowMessage($"{participant.Hand.Cards[^1]}");
+        }
+         
+        //-----------CURRENT HAND DISPLAY-------------
+        // Prints the player's name,cards and total score
+        ConsoleUi.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
+        // Ask the player to HIT or STAND and return their choice.
+        return _ui.AskMove(participant, _dealer, _players);
+    }
+
+    
+    private void ShowResults()  //This method will print to user the saved data
+    {
+        List<string> savedResults = _storage.LoadResults();
+
+        if (savedResults.Count == 0)    //If there isn't any data yet, send a feedback
+        {
+            ConsoleUi.ShowMessage("Inga resultat sparade ännu.");
+        }
+        else                    //just show to user all saved data as a message
+        {
+            for (int i = 0; i < savedResults.Count; i++)
+            {
+                ConsoleUi.ShowMessage(savedResults[i]);
+            }
+        }
+    }
+
+    private void AddPlayers()
+    {
+        if (_players.Count < 5 && _players.Count >= 0)   //Check if there are player spots.
+        {
+            int playerType =_ui.AskTypeOfPlayer();
+            int count = _ui.AskPlayerCount(_players);
             for (int i = 0; i < count; i++)
             {
                 string name = _ui.AskName();
@@ -71,83 +160,9 @@ public class Game
                 }
             }
         }
-        for (int i = 0; i < _players.Count; i++)    //Need to clean all hands before starting the next round
+        else
         {
-            _players[i].Hand.Clear();
-
-            if (_players[i] is ComputerPlayer bot) // Only computer players have a strategy
-            {
-                IPlayerStrategy newStrategy = Random.Shared.Next(2) == 0 ? new SimpleStrategy() : new BasicStrategy();
-                bot.SetStrategy(newStrategy); // Swap strategy while the game is running
-            }
-        }
-        _dealer.Hand.Clear();
-        _dealer.HideHoleCard();
-
-
-        if (_deck.IsCutCardReached)
-        {
-            _ui.ShowMessage("\n[INFO] Skiljekortet har nåtts! Skon blandas om inför näasta runda....");
-            _deck.ShuffleShoe();
-        }
-    
-
-        List<Outcome> results = _round.PlayRound(_deck, _players, _dealer);   //It will run Round class
-
-        for (int i = 0; i < _players.Count; i++)     //It shows everyone hands before leaving the round
-        {
-            _ui.ShowHand(_players[i], false);
-        }
-
-        _ui.ShowHand(_dealer, false);
-
-        for (int i = 0; i < _players.Count; i++)   //Shows the outcome of every player.
-        {
-            _ui.ShowMessage($"{_players[i].Name}");
-            _ui.ShowOutcome(results[i]);
-            _storage.SaveResult(_players[i].Name, results[i]);   //It will save all data from every player in the end of the round
-        }
-    }
-
-    private Move AskMoveWithDealer(Participant participant) 
-    {
-        // ----------CARD COUNTING DISPLAY------------
-        // Print the Running Count and True Count
-        _ui.ShowMessage($"[KORTRÄKNING] Löpande: {_deck.RunningCount} | Sann: {_deck.GetTrueCount()}");
-        // Print the humoristic indicator message telling the player  if the deck  is favorabel or not
-        _ui.ShowMessage($"[STATUS] {_deck.GetAdvantageIndicator()}\n");
-        
-        //-----------NEW CARD DISPLAY-----------------
-        // Check if the player aready drew a card  this round
-        if (participant.Hand.Cards.Count > 2)
-        {    
-            // Prints the last card drawn using [^1]
-            _ui.ShowMessage($"Ditt nya kort:");
-            _ui.ShowMessage($"{participant.Hand.Cards[^1]}");
-        }
-         
-        //-----------CURRENT HAND DISPLAY-------------
-        // Prints the player's name,cards and total score
-        _ui.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
-        // Ask the player to HIT or STAND and return their choice.
-        return _ui.AskMove(participant, _dealer, _players);
-    }
-
-    
-    private void ShowResults()  //This method will print to user the saved data
-    {
-        List<string> savedResults = _storage.LoadResults();
-
-        if (savedResults.Count == 0)    //If there isn't any data yet, send a feedback
-        {
-            _ui.ShowMessage("Inga resultat sparade ännu.");
-        }
-        else                    //just show to user all saved data as a message
-        {
-            for (int i = 0; i < savedResults.Count; i++)
-            {
-                _ui.ShowMessage(savedResults[i]);
-            }
+            ConsoleUi.ShowMessage("Det finns inga lediga platser.");
         }
     }
 
