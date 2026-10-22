@@ -6,7 +6,6 @@ namespace Tjugoett.Storage;
 public class GameStorage
 {
     private readonly string _filePath = "results.txt"; // File where player names and game results are stored.
-
     private readonly string _playersFilePath = "players.txt"; // File for saving the last active players.
     private readonly string _chipsFilePath = "chips.txt"; // Store player chip balances.
     public void SaveResult(string playerName, Outcome outcome) // Save a plyyer's result without deleting previous results.

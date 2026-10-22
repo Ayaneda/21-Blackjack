@@ -12,10 +12,26 @@ public class ConsoleUi
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
         Console.WriteLine("1. Spela en runda");
-        Console.WriteLine("2. Visa tidigare resultat");
-        Console.WriteLine("3. Avsluta");
+        Console.WriteLine("2. Ladda sista spelet");
+        Console.WriteLine("3. Lägga till spelare");
+        Console.WriteLine("4. Lämna spelet");
+        Console.WriteLine("5. Visa statistik");
+        Console.WriteLine("6. Avsluta");
         Console.Write("Välj: ");
-        return ReadInt(1,3);
+        return ReadInt(1, 6);
+    }
+
+    public int AskPlayerCount(List<Player> players) // Asks how many players, 1 to 5
+    {
+        Console.Write($"Ange antal spelare (1-{5 - players.Count}): ");
+        return ReadInt(1, 5 - players.Count);
+    }
+
+    public int AskTypeOfPlayer()
+    {
+        
+        Console.WriteLine("Vilket typ av spelare: (1. Människa /2. Dator)");
+        return ReadInt(1,2);
     }
     public int LoadLastPlayers()
     {
@@ -28,11 +44,6 @@ public class ConsoleUi
         ShowMessage("1. Välj tidigare spelare");
         ShowMessage("2. Ange nytt spelarnamn");
         return ReadInt(1,2);
-    }
-    public int AskPlayerCount() // Asks how many players, 1 to 5
-    {
-        Console.Write("Ange antal spelare (1-5): ");
-        return ReadInt(1,5);
     }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
@@ -88,9 +99,13 @@ public class ConsoleUi
     }
 
 
-    public void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
+    public static void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
     {
-        Console.WriteLine($"{participant.Name}:");
+        Console.WriteLine($"{participant.Name}");
+        if (!hideHoleCard) // Show the total only when all cards are visible.
+        {
+            Console.WriteLine($"Värde: {participant.Hand.Value}");
+        }
 
         for (int row = 0; row < 7; row++) // This goes throw all 7 rows(every time that a row is writen go to the next row of the card)
         {
@@ -110,18 +125,34 @@ public class ConsoleUi
             }
             Console.WriteLine(); // This just create a new empty line
         }
-        if (!hideHoleCard) // Show the total only when all cards are visible.
-        {
-            Console.WriteLine($"Värde: {participant.Hand.Value}");
-        }
 
     }
+    public Player AskNameToRemove(List<Player> players)
+    {
+        while (true)
+        {
+            Console.Write("Vilken spelare vill lämna spelet?: ");
+            string name = (Console.ReadLine() ?? "").Trim();
+            for (int i = 0; i < players.Count; i++)
+            {
+                if(players[i].Name == name)
+                {
+                    return players[i];
+                }
+            }
+            
+            Console.WriteLine("Det finns ingen spelare med det namnet");
+        
+        }
+        
+    }
 
-    public void ShowMessage(string message) //Method that is used by Game.cs to print messages
+    public static void ShowMessage(string message) //Method that is used by Game.cs to print messages
     {
         Console.WriteLine(message);
     }
-    public void Pause() // Short pause so the user can follow the computer players
+
+    public static void Pause() // Short pause so the user can follow the computer players
     {
         Thread.Sleep(1000); // 1000 milliseconds = 1 second
     }

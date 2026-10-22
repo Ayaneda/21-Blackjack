@@ -6,11 +6,6 @@ namespace Tjugoett.Rules;
 
 public class Round
 {
-    public ConsoleUi ConsoleUi;
-    public Round()
-    {
-        ConsoleUi = new ConsoleUi();
-    }
     // Here we receive a list of players, the deck and the dealer.
     public List<Outcome> PlayRound(Shoes deck, List<Player> players, Dealer dealer)
     {
