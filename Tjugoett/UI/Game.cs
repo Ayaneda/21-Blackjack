@@ -63,7 +63,7 @@ public class Game
 
         if (_players.Count == 0)
         {
-            ConsoleUi.ShowMessage("Alla spelare har slut på marker.");
+            ConsoleUi.ShowMessage("Det finns inte spelare vid bordet. Lägga spelare först.");
             return;
         }
 
@@ -179,8 +179,8 @@ public class Game
         }
 
         // ---------- CURRENT HAND DISPLAY ----------
-        // Prints the player's name,cards and total score
-        ConsoleUi.ShowMessage($"{participant.Name}s hand: {participant.Hand} (Totalt: {participant.Hand.Value})");
+        // Prints the player's name and total score
+        ConsoleUi.ShowMessage($"{participant.Name}s hand:   (Totalt: {participant.Hand.Value})");
 
         // Ask the player to HIT or STAND and return their choice.
         return _ui.AskMove(

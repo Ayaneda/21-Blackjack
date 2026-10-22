@@ -28,7 +28,7 @@ public class ConsoleUi
     public int AskTypeOfPlayer()
     {
         
-        Console.WriteLine("Vilket typ av spelare: (1. Spelare /2. Datorspelare)");
+        Console.WriteLine("Vilket typ av spelare: (1. Människa /2. Dator)");
         return ReadInt(1,2);
     }
 
@@ -87,7 +87,11 @@ public class ConsoleUi
 
     public static void ShowHand(Participant participant, bool hideHoleCard) //Print the cards and the total, hide the hole card if hideHoleCard is true. 
     {
-        Console.WriteLine($"{participant.Name}:");
+        Console.WriteLine($"{participant.Name}");
+        if (!hideHoleCard) // Show the total only when all cards are visible.
+        {
+            Console.WriteLine($"Värde: {participant.Hand.Value}");
+        }
 
         for (int row = 0; row < 7; row++) // This goes throw all 7 rows(every time that a row is writen go to the next row of the card)
         {
@@ -106,10 +110,6 @@ public class ConsoleUi
                 Console.Write(cardLines[row] + " ");          // Print only the current row + space between first row of all cards
             }
             Console.WriteLine(); // This just create a new empty line
-        }
-        if (!hideHoleCard) // Show the total only when all cards are visible.
-        {
-            Console.WriteLine($"Värde: {participant.Hand.Value}");
         }
 
     }
