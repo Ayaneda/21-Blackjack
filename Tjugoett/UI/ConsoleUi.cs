@@ -6,7 +6,7 @@ namespace Tjugoett.UI;
 
 public class ConsoleUi
 {
-    public int ShowMenu() // Shows the menu and reads the choice with ReadInt (below)
+    public int ShowMenu() // Shows the menu and reads the choice
     {
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
@@ -14,19 +14,43 @@ public class ConsoleUi
         Console.WriteLine("2. Visa tidigare resultat");
         Console.WriteLine("3. Avsluta");
         Console.Write("Välj: ");
-        return ReadInt(1, 3);
+        string input = Console.ReadLine() ?? "";
+        int choice;
+
+        while (!int.TryParse(input, out choice) || choice < 1 || choice > 3) // Ask again if it is not a number between 1 and 3
+        {
+            Console.Write("Skriv en siffra mellan 1 och 3: ");
+            input = Console.ReadLine() ?? "";
+        }
+        return choice;
     }
 
     public int AskPlayerCount() // Asks how many players, 1 to 5
     {
         Console.Write("Ange antal spelare (1-5): ");
-        return ReadInt(1, 5);
+        string input = Console.ReadLine() ?? "";
+        int count;
+
+        while (!int.TryParse(input, out count) || count < 1 || count > 5) // Ask again if it is not a number between 1 and 5
+        {
+            Console.Write("Skriv en siffra mellan 1 och 5: ");
+            input = Console.ReadLine() ?? "";
+        }
+        return count;
     }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
     {
         Console.Write($"Ange antal datorspelare (0-{max}): ");
-        return ReadInt(0, max);
+        string input = Console.ReadLine() ?? "";
+        int count;
+
+        while (!int.TryParse(input, out count) || count < 0 || count > max) // Ask again if it is not a number between 0 and max
+        {
+            Console.Write($"Skriv en siffra mellan 0 och {max}: ");
+            input = Console.ReadLine() ?? "";
+        }
+        return count;
     }
 
     public string AskName()
@@ -66,7 +90,14 @@ public class ConsoleUi
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
-        int choice = ReadInt(1, 2);
+        string input = Console.ReadLine() ?? "";
+        int choice;
+
+        while (!int.TryParse(input, out choice) || choice < 1 || choice > 2) // Ask again if it is not a number between 1 and 2
+        {
+            Console.Write("Skriv en siffra mellan 1 och 2: ");
+            input = Console.ReadLine() ?? "";
+        }
 
         if (choice == 1)
         {
@@ -143,18 +174,5 @@ public class ConsoleUi
             Console.WriteLine("Naturlig tjugoett!");
         }
 
-    }
-
-    private int ReadInt(int min, int max) // Reads a number between min and max, asks again if invalid. Is used in ShowMenu and AskPlayerCount
-    {
-        while (true)
-        {
-            string input = Console.ReadLine() ?? "";
-            if (int.TryParse(input, out int number) && number >= min && number <= max)
-            {
-                return number;
-            }
-            Console.Write($"Skriv en siffra mellan {min} och {max}: ");
-        }
     }
 }

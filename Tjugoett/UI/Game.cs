@@ -64,6 +64,12 @@ public class Game
 
                 string answer = _ui.GetInput();
 
+                while (answer != "1" && answer != "2") // Ask again until the answer is 1 or 2.
+                {
+                    _ui.ShowMessage("Skriv 1 eller 2:");
+                    answer = _ui.GetInput();
+                }
+
                 if (answer == "1")
                 {
                     foreach (string name in lastPlayers)
@@ -101,6 +107,12 @@ public class Game
                         _ui.ShowMessage("2. Ange nytt spelarnamn");
 
                         string choice = _ui.GetInput(); // Read the user's choice.
+
+                        while (choice != "1" && choice != "2") // Ask again until the choice is 1 or 2.
+                        {
+                            _ui.ShowMessage("Skriv 1 eller 2:");
+                            choice = _ui.GetInput();
+                        }
 
                         if (choice == "1") // Select a previously saved player.
                         {
