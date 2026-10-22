@@ -45,11 +45,6 @@ public class ConsoleUi
         ShowMessage("2. Ange nytt spelarnamn");
         return ReadInt(1,2);
     }
-    public int AskPlayerCount() // Asks how many players, 1 to 5
-    {
-        Console.Write("Ange antal spelare (1-5): ");
-        return ReadInt(1,5);
-    }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
     {

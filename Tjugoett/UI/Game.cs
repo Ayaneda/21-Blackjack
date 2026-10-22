@@ -238,7 +238,7 @@ public class Game
                     ConsoleUi.ShowMessage(name);
                 }
             }
-            int count = _ui.AskPlayerCount();
+            int count = _ui.AskPlayerCount(_players);
             for (int i = 0; i < count; i++)
             {
             // Let the user choose between a saved player and a new player.
