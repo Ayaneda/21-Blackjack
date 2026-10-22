@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tjugoett")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+211d66db52574ace614edeb53e31a02d3f5f5faa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8c5d0459d71cd773ab682c99eea08fc37c77970")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tjugoett")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tjugoett")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
