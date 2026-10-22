@@ -482,4 +482,8 @@ $RECYCLE.BIN/
 *.swp
 
 .DS_Store
+
+# Game data created when the game runs
+results.txt
+chips.txt
 players.txt
