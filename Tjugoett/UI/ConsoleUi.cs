@@ -110,6 +110,11 @@ public class ConsoleUi
         Console.WriteLine(message);
     }
 
+    public string GetInput() // Reads a line of text from the user. Is used by Game.cs
+    {
+        return Console.ReadLine() ?? "";
+    }
+
     public void Pause() // Short pause so the user can follow the computer players
     {
         Thread.Sleep(1000); // 1000 milliseconds = 1 second

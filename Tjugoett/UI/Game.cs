@@ -62,7 +62,7 @@ public class Game
                 _ui.ShowMessage("1. Fortsätt med senaste spelarna");
                 _ui.ShowMessage("2. Välj andra spelare");
 
-                string answer = Console.ReadLine() ?? "";
+                string answer = _ui.GetInput();
 
                 if (answer == "1")
                 {
@@ -100,17 +100,17 @@ public class Game
                         _ui.ShowMessage("1. Välj tidigare spelare");
                         _ui.ShowMessage("2. Ange nytt spelarnamn");
 
-                        string choice = Console.ReadLine() ?? ""; // Read the user's choice.
+                        string choice = _ui.GetInput(); // Read the user's choice.
 
                         if (choice == "1") // Select a previously saved player.
                         {
                             _ui.ShowMessage("Ange namnet på en tidigare spelare:");
-                            name = Console.ReadLine() ?? "";
+                            name = _ui.GetInput();
 
                             while (!savedNames.Contains(name)) // Check if the player exists.
                             {
                                 _ui.ShowMessage("Spelaren finns inte. Försök igen:");
-                                name = Console.ReadLine() ?? "";
+                                name = _ui.GetInput();
                             }
                         }
                         else // Create a new player.
