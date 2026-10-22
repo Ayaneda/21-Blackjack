@@ -444,7 +444,7 @@ public class Game
     {
         foreach(Player player in _players)
         {
-            ConsoleUi.ShowMessage($"{player}");
+            ConsoleUi.ShowMessage($"{player.Name}");
         }
         Player playerToRemove = _ui.AskNameToRemove(_players);
         _players.Remove(playerToRemove);
