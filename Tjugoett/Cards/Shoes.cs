@@ -64,7 +64,7 @@ public class Shoes
         _cards.RemoveAt(0); // Remove the card so it isn't use again.
 
         // Count the card that just drawn according to the Hi-Lo system
-        if (isHidden)
+        if (!isHidden)
         {
             UppdateHiLoCount(cardToDeal);
         }
