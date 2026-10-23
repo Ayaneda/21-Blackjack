@@ -8,28 +8,19 @@ public class Shoes
     // A singel list containing all cards from all decks combinded.
     private List<Card> _cards = new List <Card>();
 
+    private int _numberOfDecks;
+
     // A boolean variable that set "true" wwhen passed divider card
     public bool IsCutCardReached { get; private set; }
-
 
     public int RunningCount { get; private set; } // Running count
 
     // Constructor initialize the shoe snd fills it with  6 decks
     public Shoes(int numberOfDeck = 6)
     {
-        // We loop through the number of decks we want to add
-        for (int i = 0; i < numberOfDeck; i++)
-        {
-            // We create a temporary deck 
-            Deck tempDeck = new Deck();
-            
-            foreach (Card card in tempDeck.deck)
-            {
-                _cards.Add(card);
-            }
-        }
-
-        // When all decks are moves, we shuffle all decks
+        // Save how many decks to use
+        _numberOfDecks = numberOfDeck;
+        // Fills and shuffle the shoe for the first time
         ShuffleShoe();
         
     }
@@ -37,6 +28,20 @@ public class Shoes
     // A simpel, classic Fisher-Yates shuffle
     public void ShuffleShoe()
     {
+        // Empty the cards that are left
+        _cards.Clear();
+
+        for (int i = 0; i < _numberOfDecks; i++)
+        {
+            // Refills the shoe with brand new decks
+            Deck tempDeck = new Deck();
+            foreach (Card card in tempDeck.deck)
+            {
+                _cards.Add(card);
+            }
+        }
+
+
         Random random = new Random(); // Random generator
         int n = _cards.Count; // Counter (312)
 
@@ -59,6 +64,13 @@ public class Shoes
     // Same method name as in Deck. So I dont need to change it in Deck.cs
     public Card DealCard()
     {
+        // If the shoe runs empty during the run , it refills automatically
+        if (_cards.Count == 0)
+        {
+            ShuffleShoe();
+        }
+
+
         // Take the top card from the list.
         Card cardToDeal = _cards[0];
         _cards.RemoveAt(0); // Remove the card so it isn't use again.
