@@ -8,6 +8,8 @@ public class Shoes
     // A singel list containing all cards from all decks combinded.
     private List<Card> _cards = new List <Card>();
 
+    private int _cutCardPosition; // How many cards are left when the cut card is reached
+
     private int _numberOfDecks;
 
     // A boolean variable that set "true" wwhen passed divider card
@@ -57,6 +59,9 @@ public class Shoes
         // The shoe has just been shuffled, so the divider card has not been reached yet.
         IsCutCardReached = false;
 
+        // Place the cut card at a random position in the back quarter of the shoe
+        _cutCardPosition = random.Next(1, _cards.Count / 4 + 1);  
+
         RunningCount = 0;
 
     }
@@ -78,10 +83,10 @@ public class Shoes
         // Count the card that just drawn according to the Hi-Lo system
         UppdateHiLoCount(cardToDeal);
 
-        // Uses the same method name as in Deck to see how many cards are left in total.
-        if (_cards.Count < 60)
+        // The cut card is reached when the cards left reach the random cut card position
+        if (_cards.Count <= _cutCardPosition)
         {
-            IsCutCardReached = true;
+           IsCutCardReached = true;
         }
 
         return cardToDeal;
