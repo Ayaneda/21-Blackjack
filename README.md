@@ -35,8 +35,8 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
  
 ## Vem som gjort vad — vilket tillval var och en har byggt
 ### Aldo
-- Klassen Move
-- Klassen Outcome
+- Enum Move
+- Enum Outcome
 - Klassen Round
 - **Tillval 5 - Sko med flera lekar och korträkning** 
 
