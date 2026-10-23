@@ -145,6 +145,11 @@ public class ConsoleUi
                 {
                     return players[i];
                 }
+                else if (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.WriteLine("Inga har lämnat bordet");
+                    break;
+                }
             }
             
             Console.WriteLine("Det finns ingen spelare med det namnet");
