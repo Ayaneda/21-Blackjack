@@ -26,13 +26,6 @@ public class ConsoleUi
         Console.Write($"Ange antal spelare (1-{5 - players.Count}): ");
         return ReadInt(1, 5 - players.Count);
     }
-
-    public int AskTypeOfPlayer()
-    {
-        
-        Console.WriteLine("Vilket typ av spelare: (1. Människa /2. Dator)");
-        return ReadInt(1,2);
-    }
     public int LoadLastPlayers()
     {
         Console.WriteLine("1. Fortsätt med senaste spelarna");
@@ -55,7 +48,13 @@ public class ConsoleUi
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
-        return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return "Spelare";   // If null, the name is "Spelare"
+        }
+        return input.Trim();
     }
     public decimal AskBet(Player player) // Asks how many chips the player wants to bet.
     {
@@ -127,24 +126,29 @@ public class ConsoleUi
         }
 
     }
-    public Player AskNameToRemove(List<Player> players)
+    public Player? AskNameToRemove(List<Player> players) // Player? means it can return a Player OR null
     {
         while (true)
         {
-            Console.Write("Vilken spelare vill lämna spelet?: ");
+            Console.Write("Vilken spelare vill lämna spelet? (Tryck Enter för att avbryta): ");
             string name = (Console.ReadLine() ?? "").Trim();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Ingen har lämnat bordet.");
+                return null; // Immediately leaves the loop and returns nothing!
+            }
+
             for (int i = 0; i < players.Count; i++)
             {
-                if(players[i].Name == name)
+                if (players[i].Name == name)
                 {
-                    return players[i];
+                    return players[i]; // Found the player! Leaves the loop and returns the player.
                 }
             }
-            
-            Console.WriteLine("Det finns ingen spelare med det namnet");
-        
+
+            Console.WriteLine("Det finns ingen spelare med det namnet.");
         }
-        
     }
 
     public static void ShowMessage(string message) //Method that is used by Game.cs to print messages

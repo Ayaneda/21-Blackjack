@@ -275,8 +275,7 @@ public class Game
 
                 _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
             }
-            int freeSeats = 5 - count; //  Max 5 players in total
-
+            int freeSeats = 5 - _players.Count;
             if (freeSeats > 0) //Only ask if there is room left
             {
                 int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
@@ -288,8 +287,13 @@ public class Game
                         ? new SimpleStrategy()
                         : new BasicStrategy();
 
+                    int botNumber = 1;
+                    while (_players.Exists(p => p.Name == $"Dator {botNumber}"))
+                    {
+                        botNumber++;
+                    }
                     _players.Add(
-                        new ComputerPlayer($"Dator {i + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                        new ComputerPlayer($"Dator {botNumber}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
                 }
             }
             // Save the human players for the next game.
@@ -334,11 +338,21 @@ public class Game
     }
     private void RemovePlayer()
     {
-        foreach(Player player in _players)
+        foreach (Player player in _players)
         {
             ConsoleUi.ShowMessage($"{player.Name}");
         }
-        Player playerToRemove = _ui.AskNameToRemove(_players);
-        _players.Remove(playerToRemove);
+        if (_players.Count > 0)
+        {
+            Player? playerToRemove = _ui.AskNameToRemove(_players);
+            if (playerToRemove != null)
+            {
+                _players.Remove(playerToRemove);
+            }
+        }
+        else // No players at the table, so there is no one to remove
+        {
+            ConsoleUi.ShowMessage("Det finns inga spelare att plockas bort.");
+        }    
     }
 }
