@@ -276,7 +276,7 @@ public class Game
                 _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
             }
             int freeSeats = 5 - _players.Count;
-            if (freeSeats <= 5) //Only ask if there is room left
+            if (freeSeats > 0) //Only ask if there is room left
             {
                 int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
 
