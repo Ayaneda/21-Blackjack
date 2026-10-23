@@ -61,8 +61,18 @@ public class Game
 
     private void PlayRound()
     {
-        _players.RemoveAll(player => player.Betting.Chips == 0); // Removes players without chips.
+        for (int i = _players.Count - 1; i >= 0; i--) // Removes players with no chips left.
+        {
+            if (_players[i].Betting.Chips == 0)
+            {
+                ConsoleUi.ShowMessage(
+                    $"{_players[i].Name} har slut på marker och lämnar bordet."
+                );
 
+                _players.RemoveAt(i);
+            }
+        }
+        
         if (_players.Count == 0)
         {
             ConsoleUi.ShowMessage("Det finns inte spelare vid bordet. Lägga spelare först.");
@@ -154,17 +164,7 @@ public class Game
             _storage.SaveResult(player.Name, results[i]);  //It will save all data from every player in the end of the round
         }
 
-        for (int i = _players.Count - 1; i >= 0; i--) // Removes players with no chips left.
-        {
-            if (_players[i].Betting.Chips == 0)
-            {
-                ConsoleUi.ShowMessage(
-                    $"{_players[i].Name} har slut på marker och lämnar bordet."
-                );
-
-                _players.RemoveAt(i);
-            }
-        }
+        
     }
 
     private Move AskMoveWithDealer(Participant participant)
@@ -334,6 +334,10 @@ public class Game
                     ConsoleUi.ShowMessage("Tidigare spelare har återställts!");
                 }
             }
+        }
+        else
+        {
+            ConsoleUi.ShowMessage("Bordet måste vara tömd.");
         }
     }
     private void RemovePlayer()

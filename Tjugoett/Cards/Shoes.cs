@@ -57,14 +57,17 @@ public class Shoes
     }
     
     // Same method name as in Deck. So I dont need to change it in Deck.cs
-    public Card DealCard()
+    public Card DealCard(bool isHidden = false)
     {
         // Take the top card from the list.
         Card cardToDeal = _cards[0];
         _cards.RemoveAt(0); // Remove the card so it isn't use again.
 
         // Count the card that just drawn according to the Hi-Lo system
-        UppdateHiLoCount(cardToDeal);
+        if (isHidden)
+        {
+            UppdateHiLoCount(cardToDeal);
+        }
 
         // Uses the same method name as in Deck to see how many cards are left in total.
         if (_cards.Count < 60)
@@ -77,7 +80,7 @@ public class Shoes
     }
 
     // A Method that checks the card value and updates RunningCount.
-    private void UppdateHiLoCount(Card card)
+    public void UppdateHiLoCount(Card card)
     {
         // Check the card's value/Rank
         // If your project uses an int or an Enum for rank, adapt it here
