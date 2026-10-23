@@ -12,7 +12,7 @@ public class ConsoleUi
         Console.WriteLine();
         Console.WriteLine("=== Tjugoett ===");
         Console.WriteLine("1. Spela en runda");
-        Console.WriteLine("2. Ladda sista spelet");
+        Console.WriteLine("2. Ladda föregående spel");
         Console.WriteLine("3. Lägga till spelare");
         Console.WriteLine("4. Lämna spelet");
         Console.WriteLine("5. Visa statistik");
@@ -28,15 +28,15 @@ public class ConsoleUi
     }
     public int LoadLastPlayers()
     {
-        Console.WriteLine("1. Fortsätt med senaste spelarna");
+        Console.WriteLine("1. Fortsätt med föregående spelare");
         Console.WriteLine("2. Välj andra spelare");
-        return ReadInt(1,2);
+        return ReadInt(1, 2);
     }
     public int CheckSavedPlayers()
     {
         ShowMessage("1. Välj tidigare spelare");
         ShowMessage("2. Ange nytt spelarnamn");
-        return ReadInt(1,2);
+        return ReadInt(1, 2);
     }
 
     public int AskComputerPlayerCount(int max) // Asks how many computer players, 0 to max (max depends on the number of human players that are playing)
@@ -88,7 +88,7 @@ public class ConsoleUi
         Console.WriteLine("1. Ta kort (Hit)");
         Console.WriteLine("2. Stanna (Stand)");
         Console.Write("Välj: ");
-        int choice = ReadInt(1,2);
+        int choice = ReadInt(1, 2);
 
         if (choice == 1)
         {
