@@ -64,21 +64,18 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 
 ## Vilka regler som gäller, om ni avvikit från specifikationen på någon punkt
 - Det måste alltid finnas minst en mänsklig spelare, och högst fem spelare vid bordet.
-- Skriver man inget namn får spelaren namnet "Spelare". Två spelare vid bordet kan inte ha samma namn.
 - "Ladda sista spelet" kan bara användas innan några spelare har lagts till vid bordet.
 - Nya spelare börjar med 100 marker. Den som får slut på marker lämnar bordet.
 - Datorspelare börjar alltid med 100 marker och satsar 10 marker varje runda. Deras marker sparas inte mellan spelen.
 - En spelare känns igen på sitt namn. Samma namn i ett senare spel får samma marker och statistik.
-- Givaren drar på 16 eller lägre och stannar på 17 eller högre, även mjuk 17.
-- Naturlig tjugoett betalar 3:2.
-- Det spelas med en sko med sex kortlekar. Skiljekortet läggs på en slumpad plats i den bakre fjärdedelen av skon, och när det nås blandas skon om efter rundan.
+- Det spelas med en sko med sex kortlekar. Skiljekortet läggs på en slumpad plats i den bakre fjärdedelen av skon och när det nås blandas skon om efter rundan.
 
 ## Kända brister
 - Väljer man "Ladda sista spelet" när det redan sitter spelare vid bordet säger spelet inte varför ingenting händer.
-- En spelare som har fått slut på marker kan inte spela igen med samma namn. Hen tas bort från bordet utan meddelande.
+- En spelare som har fått slut på marker kan inte spela igen med samma namn. Den tas bort från bordet utan meddelande.
 - Listan över senaste spelare uppdateras inte när någon lämnar bordet, så "Ladda sista spelet" kan ta tillbaka spelare som har gått.
 - Korträkningen räknar givarens dolda kort redan när det delas ut, inte när det vänds.
-- Statistiken visar inte vilken strategi en datorspelare hade.
 
 
-
+## Klassdiagram
+![Klassdiagram](klassdiagram.png)
