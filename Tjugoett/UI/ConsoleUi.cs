@@ -150,6 +150,7 @@ public class ConsoleUi
                     Console.WriteLine("Inga har lämnat bordet");
                     break;
                 }
+                break;
             }
             
             Console.WriteLine("Det finns ingen spelare med det namnet");
