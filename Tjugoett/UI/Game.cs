@@ -344,12 +344,11 @@ public class Game
         }
         if (_players.Count > 0)
         {
-            Player playerToRemove = _ui.AskNameToRemove(_players);
-            _players.Remove(playerToRemove);
-        }
-        else
-        {
-            ConsoleUi.ShowMessage("Det finns inga spelare att plockas bort.");
+            Player? playerToRemove = _ui.AskNameToRemove(_players);
+            if(playerToRemove != null)
+                {
+                    _players.Remove(playerToRemove);
+                }
         }
     }
 }

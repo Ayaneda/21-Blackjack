@@ -133,30 +133,29 @@ public class ConsoleUi
         }
 
     }
-    public Player AskNameToRemove(List<Player> players)
+public Player? AskNameToRemove(List<Player> players) // Player? means it can return a Player OR null
     {
         while (true)
         {
-            Console.Write("Vilken spelare vill lämna spelet?: ");
+            Console.Write("Vilken spelare vill lämna spelet? (Tryck Enter för att avbryta): ");
             string name = (Console.ReadLine() ?? "").Trim();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Ingen har lämnat bordet.");
+                return null; // Immediately leaves the loop and returns nothing!
+            }
+
             for (int i = 0; i < players.Count; i++)
             {
-                if(players[i].Name == name)
+                if (players[i].Name == name)
                 {
-                    return players[i];
+                    return players[i]; // Found the player! Leaves the loop and returns the player.
                 }
-                else if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Inga har lämnat bordet");
-                    break;
-                }
-                break;
             }
-            
-            Console.WriteLine("Det finns ingen spelare med det namnet");
-        
+
+            Console.WriteLine("Det finns ingen spelare med det namnet.");
         }
-        
     }
 
     public static void ShowMessage(string message) //Method that is used by Game.cs to print messages
