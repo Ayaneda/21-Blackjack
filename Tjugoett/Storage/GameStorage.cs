@@ -112,7 +112,7 @@ public class GameStorage
             string[] parts = line.Split(';');
             if (parts.Length == 2 && parts[0] == playerName)
             {
-                if (decimal.TryParse(parts[1], NumberStyles.Number, CultureInfo.InvariantCulture, out decimal chips) && chips >= 0) // Read saved decimal chips.
+                if (decimal.TryParse(parts[1], NumberStyles.Number, CultureInfo.InvariantCulture, out decimal chips) && chips > 0) // Read saved decimal chips.
                 {
                     return chips; // Return saved chips.
                 }

@@ -26,7 +26,7 @@ public class Round
         for (int j = 0; j < 2; j++)
         {
             // Gives two card to the dealder
-            Card delarCard = deck.DealCard();
+            Card delarCard = deck.DealCard(j == 1);
             dealer.Hand.AddCard(delarCard);
         }
 
@@ -90,6 +90,7 @@ public class Round
 
         // Dealer's turn - after the players are done.
         dealer.RevealHoleCard(); // Turning the hole card first
+        deck.UppdateHiLoCount(dealer.Hand.Cards[1]);
 
         while (true)
         {
