@@ -287,8 +287,13 @@ public class Game
                         ? new SimpleStrategy()
                         : new BasicStrategy();
 
+                    int botNumber = 1;
+                    while (_players.Exists(p => p.Name == $"Dator {botNumber}"))
+                    {
+                        botNumber++;
+                    }
                     _players.Add(
-                        new ComputerPlayer($"Dator {_players.Count + 1}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
+                        new ComputerPlayer($"Dator {botNumber}", strategy, _dealer)); //A new computer player is added with a name and a strategy and the dealer (to be able to see the open cards)
                 }
             }
             // Save the human players for the next game.

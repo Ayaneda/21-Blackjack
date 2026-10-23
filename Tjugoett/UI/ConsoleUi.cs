@@ -55,7 +55,13 @@ public class ConsoleUi
     public string AskName()
     {
         Console.Write("Namn på spelare: ");
-        return Console.ReadLine() ?? "Spelare"; // If null, the name is "Spelare"
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return "Spelare";   // If null, the name is "Spelare"
+        }
+        return input.Trim();
     }
     public decimal AskBet(Player player) // Asks how many chips the player wants to bet.
     {
