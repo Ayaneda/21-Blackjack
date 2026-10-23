@@ -72,7 +72,7 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 
 ## Kända brister
 - Väljer man "Ladda sista spelet" när det redan sitter spelare vid bordet säger spelet inte varför ingenting händer.
-- En spelare som har fått slut på marker kan inte spela igen med samma namn. Den tas bort från bordet utan meddelande.
+- En spelare som har fått slut på marker kan inte spela igen med samma namn. Markersaldot 0 sparas och läggs namnet till igen tas spelaren bort i början av nästa runda utan meddelande.
 - Listan över senaste spelare uppdateras inte när någon lämnar bordet, så "Ladda sista spelet" kan ta tillbaka spelare som har gått.
 - Korträkningen räknar givarens dolda kort redan när det delas ut, inte när det vänds.
 
