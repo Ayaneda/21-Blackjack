@@ -275,9 +275,8 @@ public class Game
 
                 _players.Add(new Player(name, AskMoveWithDealer, chips)); // Adds a human player.
             }
-            int freeSeats = 5 - count; //  Max 5 players in total
-
-            if (freeSeats > 0) //Only ask if there is room left
+            int freeSeats = 5 - _players.Count;
+            if (freeSeats <= 5) //Only ask if there is room left
             {
                 int computerCount = _ui.AskComputerPlayerCount(freeSeats);//Number of free seats is shown in the question to the player
 
@@ -338,7 +337,14 @@ public class Game
         {
             ConsoleUi.ShowMessage($"{player.Name}");
         }
-        Player playerToRemove = _ui.AskNameToRemove(_players);
-        _players.Remove(playerToRemove);
+        if (_players.Count > 0)
+        {
+            Player playerToRemove = _ui.AskNameToRemove(_players);
+            _players.Remove(playerToRemove);
+        }
+        else
+        {
+            ConsoleUi.ShowMessage("Det finns inga spelare att plockas bort.");
+        }
     }
 }
