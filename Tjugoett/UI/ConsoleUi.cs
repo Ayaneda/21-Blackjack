@@ -133,7 +133,7 @@ public class ConsoleUi
         }
 
     }
-public Player? AskNameToRemove(List<Player> players) // Player? means it can return a Player OR null
+    public Player? AskNameToRemove(List<Player> players) // Player? means it can return a Player OR null
     {
         while (true)
         {
