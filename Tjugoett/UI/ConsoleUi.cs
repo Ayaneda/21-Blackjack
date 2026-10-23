@@ -26,13 +26,6 @@ public class ConsoleUi
         Console.Write($"Ange antal spelare (1-{5 - players.Count}): ");
         return ReadInt(1, 5 - players.Count);
     }
-
-    public int AskTypeOfPlayer()
-    {
-        
-        Console.WriteLine("Vilket typ av spelare: (1. Människa /2. Dator)");
-        return ReadInt(1,2);
-    }
     public int LoadLastPlayers()
     {
         Console.WriteLine("1. Fortsätt med senaste spelarna");
