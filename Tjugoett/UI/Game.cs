@@ -338,17 +338,21 @@ public class Game
     }
     private void RemovePlayer()
     {
-        foreach(Player player in _players)
+        foreach (Player player in _players)
         {
             ConsoleUi.ShowMessage($"{player.Name}");
         }
         if (_players.Count > 0)
         {
             Player? playerToRemove = _ui.AskNameToRemove(_players);
-            if(playerToRemove != null)
-                {
-                    _players.Remove(playerToRemove);
-                }
+            if (playerToRemove != null)
+            {
+                _players.Remove(playerToRemove);
+            }
         }
+        else // No players at the table, so there is no one to remove
+        {
+            ConsoleUi.ShowMessage("Det finns inga spelare att plockas bort.");
+        }    
     }
 }
