@@ -69,12 +69,11 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Datorspelare börjar alltid med 100 marker och satsar 10 marker varje runda. Deras marker sparas inte mellan spelen.
 - En spelare känns igen på sitt namn. Samma namn i ett senare spel får samma marker och statistik.
 - Det spelas med en sko med sex kortlekar. Skiljekortet läggs på en slumpad plats i den bakre fjärdedelen av skon och när det nås blandas skon om efter rundan.
+- En spelare som har fått slut på marker får automatiskt 100 nya marker nästa gång hen är med, ungefär som att köpa in sig igen. Laddar man sista spelet kommer alla spelare från förra gången tillbaka, och de som hade 0 marker börjar om med 100.
+
 
 ## Kända brister
-- Väljer man "Ladda sista spelet" när det redan sitter spelare vid bordet säger spelet inte varför ingenting händer.
-- En spelare som har fått slut på marker kan inte spela igen med samma namn. Markersaldot 0 sparas och läggs namnet till igen tas spelaren bort i början av nästa runda utan meddelande.
-- Listan över senaste spelare uppdateras inte när någon lämnar bordet, så "Ladda sista spelet" kan ta tillbaka spelare som har gått.
-- Korträkningen räknar givarens dolda kort redan när det delas ut, inte när det vänds.
+- En spelare som har valt "Lämna spelet" kommer ändå tillbaka om man väljer "Ladda sista spelet" nästa gång.
 
 
 ## Klassdiagram
