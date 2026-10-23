@@ -36,6 +36,7 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Klassen Move
 - Klassen Outcome
 - Klassen Round
+- **Tillval 5 - Sko med flera lekar och korträkning** 
 
 ### Aythami
 - Enum Suit
@@ -58,6 +59,7 @@ Endast **GameStorage** är av namespace *Tjugoett.Storage*. Den kommunicerar med
 - Klassen Dealer
 - Klassen GameStorage
 - Klassen ConsoleUi tillsammans med Emelianna
+- **Tillval 4 - Satsningar och marker**
 
 
 ## Vilka regler som gäller, om ni avvikit från specifikationen på någon punkt
